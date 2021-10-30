@@ -1,0 +1,14 @@
+﻿using AutoMapper;
+using GamingWorld.API.Domain.Models;
+using GamingWorld.API.Resources;
+
+namespace GamingWorld.API.Mapping
+{
+    public class ResourceToModelProfile : Profile
+    {
+        public ResourceToModelProfile()
+        {
+            CreateMap<SavePublicationResource, Publication>();
+        }
+    }
+}
