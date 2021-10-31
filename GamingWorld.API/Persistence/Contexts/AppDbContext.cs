@@ -33,9 +33,8 @@ namespace GamingWorld.API.Persistence.Contexts
             // Seed Data
             builder.Entity<Publication>().HasData
             (
-                new Publication
-                    {Id = 1, Title = "Titulo", Content = "Contenido", PublicatedAt = "30/10/2021", PublicationType = 1}
-
+                new Publication {Id = 1, Title = "Titulo1", Content = "Contenido1", PublicatedAt = "30/10/2021", PublicationType = 1},
+                new Publication {Id = 2, Title = "Titulo2", Content = "Contenido2", PublicatedAt = "30/10/2021", PublicationType = 3}
             );
 
             builder.UseSnakeCaseNamingConvention();
