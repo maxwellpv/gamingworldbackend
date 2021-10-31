@@ -13,6 +13,8 @@
         public int ParticipantLimit { get; set; }
              
         public int PrizePool { get; set; }
+        
+        public string UrlToImage { get; set; }
              
         public string TDate { get; set; }
              

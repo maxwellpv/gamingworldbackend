@@ -17,6 +17,8 @@
         public string TDate { get; set; }
              
         public string THour { get; set; }
+        
+        public string UrlToImage { get; set; }
              
         public string PublicatedAt { get; set; }
              

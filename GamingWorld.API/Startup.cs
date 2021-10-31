@@ -34,7 +34,18 @@ namespace GamingWorld.API
         {
             services.AddControllers();
 
-            services.AddRouting(options => options.LowercaseUrls = true);
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllHeaders",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+
+            services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
 
             services.AddDbContext<AppDbContext>(options =>
             {
@@ -62,6 +73,8 @@ namespace GamingWorld.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GamingWorld.API v1"));
             }
+
+            app.UseCors("AllowAllHeaders");
 
             app.UseHttpsRedirection();
 

@@ -18,6 +18,8 @@ namespace GamingWorld.API.Resources
         public string TDate { get; set; }
              
         public string THour { get; set; }
+        
+        public string UrlToImage { get; set; }
              
         [Required] public string PublicatedAt { get; set; }
         
