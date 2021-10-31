@@ -18,6 +18,11 @@ namespace GamingWorld.API.Persistence.Repositories
             return await _context.Publications.ToListAsync();
         }
 
+        public async Task<IEnumerable<Publication>> ListByTypeAsync()
+        {
+            return await _context.Publications.ToListAsync();
+        }
+
         public async Task AddAsync(Publication publication)
         {
             await _context.Publications.AddAsync(publication);

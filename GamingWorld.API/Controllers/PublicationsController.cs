@@ -30,5 +30,15 @@ namespace GamingWorld.API.Controllers
             var resources = _mapper.Map<IEnumerable<Publication>, IEnumerable<PublicationResource>>(publications);
             return resources;
         }
+
+                
+        [HttpGet("/api/v1/[controller]/publicationType/{publicationType}")]
+        public async Task<IEnumerable<PublicationResource>> GetAllByTypeAsync(int publicationType)
+        {
+            var publications = await _publicationService.ListByTypeAsync(publicationType);
+            var resources = _mapper.Map<IEnumerable<Publication>, IEnumerable<PublicationResource>>(publications);
+            return resources;
+        }
+        
     }
 }

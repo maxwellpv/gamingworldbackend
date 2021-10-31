@@ -8,6 +8,8 @@ namespace GamingWorld.API.Domain.Services
     public interface IPublicationService
     {
         Task<IEnumerable<Publication>> ListAsync();
+        
+        Task<IEnumerable<Publication>> ListByTypeAsync(int type);
 
         Task<PublicationResponse> SaveAsync(Publication publication);
 

@@ -8,6 +8,8 @@ namespace GamingWorld.API.Domain.Repositories
     {
         Task<IEnumerable<Publication>> ListAsync();
         
+        Task<IEnumerable<Publication>> ListByTypeAsync();
+        
         Task AddAsync(Publication publication);
 
         Task<Publication> FindByIdAsync(int id);

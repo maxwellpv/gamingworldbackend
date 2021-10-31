@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GamingWorld.API.Domain.Models;
 using GamingWorld.API.Domain.Repositories;
@@ -22,6 +23,15 @@ namespace GamingWorld.API.Services
         public async Task<IEnumerable<Publication>> ListAsync()
         {
             return await _publicationRepository.ListAsync();
+        }
+
+        public async Task<IEnumerable<Publication>> ListByTypeAsync(int type)
+        {
+            var publications = await _publicationRepository.ListAsync();
+            
+            var filter = publications.Where(c => c.PublicationType == type).ToArray();
+            
+            return filter;
         }
 
         public async Task<PublicationResponse> SaveAsync(Publication publication)
