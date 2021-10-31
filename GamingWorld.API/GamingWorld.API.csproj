@@ -19,15 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Domain\Models" />
-      <Folder Include="Domain\Repositories" />
-      <Folder Include="Domain\Services" />
       <Folder Include="Extensions" />
-      <Folder Include="Mapping" />
-      <Folder Include="Persistence\Context" />
-      <Folder Include="Persistence\Repositories" />
-      <Folder Include="Resources" />
-      <Folder Include="Services" />
     </ItemGroup>
 
 </Project>
