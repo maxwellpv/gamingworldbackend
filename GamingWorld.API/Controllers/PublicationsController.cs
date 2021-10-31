@@ -40,5 +40,22 @@ namespace GamingWorld.API.Controllers
             return resources;
         }
         
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SavePublicationResource resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var publication = _mapper.Map<SavePublicationResource, Publication>(resource);
+            var result = await _publicationService.UpdateAsync(id, publication);
+            
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var publicationResource = _mapper.Map<Publication, PublicationResource>(result.Resource);
+            return Ok(publicationResource);
+        }
+        
+        
     }
 }
