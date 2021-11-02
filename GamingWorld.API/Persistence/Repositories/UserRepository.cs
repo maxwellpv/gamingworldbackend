@@ -18,5 +18,38 @@ namespace GamingWorld.API.Persistence.Repositories
         {
             return await _context.Users.ToListAsync();
         }
+        
+        public async Task AddAsync(User user)
+        {
+            await _context.Users.AddAsync(user);
+        }
+
+        public async Task<User> FindByIdAsync(int id)
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<User> FindByUsernameAsync(string username)
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(p => p.Username == username);
+        }
+
+        public async Task<User> FindByEmailAsync(string email)
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(p => p.Email == email);
+        }
+        
+        public void Update(User user)
+        {
+            _context.Users.Update(user);
+        }
+
+        public void Remove(User user)
+        {
+            _context.Users.Remove(user);
+        }
     }
 }
