@@ -9,6 +9,13 @@ namespace GamingWorld.API.Mapping
         public ResourceToModelProfile()
         {
             CreateMap<SaveUserResource, User>();
+
+            CreateMap<SaveUProfileResource, UserProfile>()
+                .ForMember(target =>
+                        target.GamingLevel,
+                    options =>
+                        options.MapFrom(source =>
+                            (EGamingLevel) source.GamingLevel));
         }
     }
 }
