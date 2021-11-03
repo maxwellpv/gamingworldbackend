@@ -7,5 +7,7 @@
         public EGamingLevel GamingLevel { get; set; }
         public bool IsStreamer { get; set; }
         
+        public User User { get; set; }
+        
     }
 }

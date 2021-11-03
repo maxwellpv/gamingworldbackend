@@ -15,6 +15,7 @@ namespace GamingWorld.API.Persistence.Repositories
 
         public async Task<IEnumerable<UserProfile>> ListAsync()
         {
+            // return await _context.Profiles.Include(up => up.User).ToListAsync(); // Pending to check if we really need the full user info when retrieving profiles.
             return await _context.Profiles.ToListAsync();
         }
 
@@ -25,12 +26,14 @@ namespace GamingWorld.API.Persistence.Repositories
 
         public async Task<UserProfile> FindByIdAsync(int id)
         {
-            return await _context.Profiles.FindAsync(id);
+            // return await _context.Profiles.Include(up => up.User).FirstOrDefaultAsync(up => up.Id == id); // Pending to check if we really need the full user info when retrieving profiles.
+            return await _context.Profiles.FirstOrDefaultAsync(up => up.Id == id);
         }
 
         public async Task<UserProfile> FindByUserId(int userId)
         {
-            return await _context.Profiles.FindAsync(userId);
+            //return await _context.Profiles.Include(up => up.User).FirstOrDefaultAsync(up => up.UserId == userId); // Pending to check if we really need the full user info when retrieving profiles.
+            return await _context.Profiles.FirstOrDefaultAsync(up => up.UserId == userId);
         }
 
         public void Update(UserProfile userProfile)
