@@ -11,11 +11,13 @@ namespace GamingWorld.API.Services
     public class UProfileService : IUProfileService
     {
         private readonly IUProfileRepository _uProfileRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UProfileService(IUProfileRepository uProfileRepository, IUnitOfWork unitOfWork)
+        public UProfileService(IUProfileRepository uProfileRepository, IUserRepository userRepository, IUnitOfWork unitOfWork)
         {
             _uProfileRepository = uProfileRepository;
+            _userRepository = userRepository;
             _unitOfWork = unitOfWork;
         }
         public async Task<IEnumerable<UserProfile>> ListAsync()
@@ -30,15 +32,14 @@ namespace GamingWorld.API.Services
 
         public async Task<UProfileResponse> SaveAsync(UserProfile userProfile)
         {
-            var existingProfile = await _uProfileRepository.FindByIdAsync(userProfile.Id);
-
-            if (existingProfile == null)
-                return new UProfileResponse("Invalid Id");
-
             var existingUserId = await _uProfileRepository.FindByUserId(userProfile.UserId);
             if (existingUserId != null)
-                return new UProfileResponse("UserId already exists");
+                return new UProfileResponse("User already has a profile.");
 
+            var user = await _userRepository.FindByIdAsync(userProfile.UserId);
+            if (user == null)
+                return new UProfileResponse("User not found");
+            
             try
             {
                 await _uProfileRepository.AddAsync(userProfile);
@@ -48,7 +49,7 @@ namespace GamingWorld.API.Services
             }
             catch (Exception e)
             {
-                return new UProfileResponse($"An error ocurred while saving the profile: {e.Message}");
+                return new UProfileResponse($"An error occurred while saving the profile: {e.Message}");
             }
         }
 
@@ -59,8 +60,8 @@ namespace GamingWorld.API.Services
             if (existingProfile == null)
                 return new UProfileResponse("Profile not found.");
 
-            var existingUserId = await _uProfileRepository.FindByUserId(userProfile.UserId);
-            if (existingUserId == null)
+            var user = await _userRepository.FindByIdAsync(userProfile.UserId);
+            if (user == null)
                 return new UProfileResponse("User not found");
 
             existingProfile.UserId = userProfile.UserId;

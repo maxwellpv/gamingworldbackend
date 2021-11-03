@@ -10,6 +10,9 @@ namespace GamingWorld.API.Resources
         public int GamingLevel { get; set; }
         
         [Required]
+        public int UserId { get; set; }
+        
+        [Required]
         public bool IsStreamer { get; set; }
     }
 }
