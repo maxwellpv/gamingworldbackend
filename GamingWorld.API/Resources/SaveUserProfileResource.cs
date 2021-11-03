@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using GamingWorld.API.Domain.Models;
 
 namespace GamingWorld.API.Resources
@@ -14,5 +16,7 @@ namespace GamingWorld.API.Resources
         
         [Required]
         public bool IsStreamer { get; set; }
+        
+        public IEnumerable<GameExperience> GameExperiences { get; set; }
     }
 }

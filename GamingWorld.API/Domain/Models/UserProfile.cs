@@ -1,4 +1,8 @@
-﻿namespace GamingWorld.API.Domain.Models
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace GamingWorld.API.Domain.Models
 {
     public class UserProfile
     {
@@ -8,6 +12,7 @@
         public bool IsStreamer { get; set; }
         
         public User User { get; set; }
+        public IList<GameExperience> GameExperiences { get; set; }
         
     }
 }

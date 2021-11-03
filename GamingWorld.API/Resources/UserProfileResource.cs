@@ -1,4 +1,8 @@
 ﻿
+using System.Collections;
+using System.Collections.Generic;
+using GamingWorld.API.Domain.Models;
+
 namespace GamingWorld.API.Resources
 {
     public class UserProfileResource
@@ -8,5 +12,7 @@ namespace GamingWorld.API.Resources
         public string GamingLevel { get; set; }
         
         public bool IsStreamer { get; set; }
+        
+        public IEnumerable<GameExperience> GameExperiences { get; set; }
     }
 }

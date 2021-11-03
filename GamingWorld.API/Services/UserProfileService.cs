@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GamingWorld.API.Domain.Models;
 using GamingWorld.API.Domain.Repositories;
@@ -39,7 +40,7 @@ namespace GamingWorld.API.Services
             var user = await _userRepository.FindByIdAsync(userProfile.UserId);
             if (user == null)
                 return new UserProfileResponse("User not found");
-            
+
             try
             {
                 await _userProfileRepository.AddAsync(userProfile);

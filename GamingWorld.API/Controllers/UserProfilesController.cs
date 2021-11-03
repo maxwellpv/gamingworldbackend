@@ -13,12 +13,12 @@ namespace GamingWorld.API.Controllers
 {
     [ApiController]
     [Route("/api/v1/[controller]")]
-    public class UserProfileController : ControllerBase
+    public class UserProfilesController : ControllerBase
     {
         private readonly IUProfileService _uProfileService;
         private readonly IMapper _mapper;
 
-        public UserProfileController(IUProfileService uProfileService, IMapper mapper)
+        public UserProfilesController(IUProfileService uProfileService, IMapper mapper)
         {
             _uProfileService = uProfileService;
             _mapper = mapper;
