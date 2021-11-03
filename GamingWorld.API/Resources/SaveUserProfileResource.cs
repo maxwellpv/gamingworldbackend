@@ -3,7 +3,7 @@ using GamingWorld.API.Domain.Models;
 
 namespace GamingWorld.API.Resources
 {
-    public class SaveUProfileResource
+    public class SaveUserProfileResource
     {
         [Required]
         [Range(1, 3)]

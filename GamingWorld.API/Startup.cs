@@ -48,8 +48,8 @@ namespace GamingWorld.API
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
 
-            services.AddScoped<IUProfileRepository, UProfileRepository>();
-            services.AddScoped<IUProfileService, UProfileService>();
+            services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+            services.AddScoped<IUProfileService, UserProfileService>();
                 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(Startup));

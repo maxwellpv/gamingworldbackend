@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GamingWorld.API.Persistence.Repositories
 {
-    public class UProfileRepository : BaseRepository, IUProfileRepository
+    public class UserProfileRepository : BaseRepository, IUserProfileRepository
     {
-        public UProfileRepository(AppDbContext context) : base(context)
+        public UserProfileRepository(AppDbContext context) : base(context)
         {
         }
 

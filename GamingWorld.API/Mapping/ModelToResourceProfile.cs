@@ -11,7 +11,7 @@ namespace GamingWorld.API.Mapping
         {
             CreateMap<User, UserResource>();
 
-            CreateMap<UserProfile, UProfileResource>()
+            CreateMap<UserProfile, UserProfileResource>()
                 .ForMember(
                     target =>
                         target.GamingLevel,

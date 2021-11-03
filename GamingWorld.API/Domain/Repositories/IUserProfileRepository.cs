@@ -5,7 +5,7 @@ using GamingWorld.API.Domain.Models;
 
 namespace GamingWorld.API.Domain.Repositories
 {
-    public interface IUProfileRepository
+    public interface IUserProfileRepository
     {
         Task<IEnumerable<UserProfile>> ListAsync();
         Task AddAsync(UserProfile userProfile);

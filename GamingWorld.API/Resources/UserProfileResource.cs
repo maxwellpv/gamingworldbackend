@@ -1,7 +1,7 @@
 ﻿
 namespace GamingWorld.API.Resources
 {
-    public class UProfileResource
+    public class UserProfileResource
     {
         public int Id { get; set;  }
         public int UserId { get; set;  }

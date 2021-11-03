@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using GamingWorld.API.Domain.Models;
 using GamingWorld.API.Domain.Repositories;
 using GamingWorld.API.Domain.Services;
-using GamingWorld.API.Services.Communication;
+using GamingWorld.API.Domain.Services.Communication;
 
 namespace GamingWorld.API.Services
 {

@@ -13,54 +13,54 @@ namespace GamingWorld.API.Controllers
 {
     [ApiController]
     [Route("/api/v1/[controller]")]
-    public class UProfileController : ControllerBase
+    public class UserProfileController : ControllerBase
     {
         private readonly IUProfileService _uProfileService;
         private readonly IMapper _mapper;
 
-        public UProfileController(IUProfileService uProfileService, IMapper mapper)
+        public UserProfileController(IUProfileService uProfileService, IMapper mapper)
         {
             _uProfileService = uProfileService;
             _mapper = mapper;
         }
         
         [HttpGet]
-        public async Task<IEnumerable<UProfileResource>> GetAllAsync()
+        public async Task<IEnumerable<UserProfileResource>> GetAllAsync()
         {
             var profiles = await _uProfileService.ListAsync();
-            var resources = _mapper.Map<IEnumerable<UserProfile>, IEnumerable<UProfileResource>>(profiles);
+            var resources = _mapper.Map<IEnumerable<UserProfile>, IEnumerable<UserProfileResource>>(profiles);
             return resources;
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] SaveUProfileResource resource)
+        public async Task<IActionResult> PostAsync([FromBody] SaveUserProfileResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
-            var profile = _mapper.Map<SaveUProfileResource, UserProfile>(resource);
+            var profile = _mapper.Map<SaveUserProfileResource, UserProfile>(resource);
             var result = await _uProfileService.SaveAsync(profile);
 
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            var userProfileResource = _mapper.Map<UserProfile, UProfileResource>(result.Resource);
+            var userProfileResource = _mapper.Map<UserProfile, UserProfileResource>(result.Resource);
             return Ok(userProfileResource);
         }
         
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveUProfileResource resource)
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveUserProfileResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
-            var profile = _mapper.Map<SaveUProfileResource, UserProfile>(resource);
+            var profile = _mapper.Map<SaveUserProfileResource, UserProfile>(resource);
             var result = await _uProfileService.UpdateAsync(id, profile);
             
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            var profileResource = _mapper.Map<UserProfile, UProfileResource>(result.Resource);
+            var profileResource = _mapper.Map<UserProfile, UserProfileResource>(result.Resource);
             return Ok(profileResource);
 
         }
@@ -73,7 +73,7 @@ namespace GamingWorld.API.Controllers
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            var profileResource = _mapper.Map<UserProfile, UProfileResource>(result.Resource);
+            var profileResource = _mapper.Map<UserProfile, UserProfileResource>(result.Resource);
             return Ok(profileResource);
         }
     }
