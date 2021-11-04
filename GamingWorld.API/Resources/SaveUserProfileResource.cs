@@ -22,5 +22,6 @@ namespace GamingWorld.API.Resources
         public IEnumerable<StreamingCategory> StreamingCategories { get; set; }
         public IEnumerable<StreamerSponsor> StreamerSponsors { get; set; }
         public IEnumerable<TournamentExperience> TournamentExperiences { get; set; }
+        public IEnumerable<FavoriteGame> FavoriteGames { get; set; }
     }
 }

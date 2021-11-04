@@ -19,5 +19,6 @@ namespace GamingWorld.API.Domain.Models
         public IEnumerable<StreamerSponsor> StreamerSponsors { get; set; }
         
         public IEnumerable<TournamentExperience> TournamentExperiences { get; set; }
+        public IEnumerable<FavoriteGame> FavoriteGames { get; set; }
     }
 }

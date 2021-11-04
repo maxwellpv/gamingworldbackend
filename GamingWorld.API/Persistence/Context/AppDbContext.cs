@@ -17,16 +17,7 @@ namespace GamingWorld.API.Persistence.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            
-            // EXAMPLE
-            GameExperience exampleExperience = new GameExperience();
-            exampleExperience.Id = 1;
-            exampleExperience.Time = 5;
-            exampleExperience.GameName = "Among You";
-            exampleExperience.TimeUnit = EGameExperienceTime.M;
-            exampleExperience.UserProfileId = 1;
-            // EXAMPLE
-            
+
             //Users
             builder.Entity<User>().ToTable("Users");
             builder.Entity<User>().HasKey(p => p.Id);
@@ -91,12 +82,27 @@ namespace GamingWorld.API.Persistence.Context
             builder.Entity<TournamentExperience>().Property(te => te.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<TournamentExperience>().Property(te => te.Name).IsRequired();
             builder.Entity<TournamentExperience>().Property(te => te.Position).IsRequired();
+            builder.Entity<TournamentExperience>().Property(te => te.UserProfileId).IsRequired();
 
             builder.Entity<TournamentExperience>().HasData
             (
                 new TournamentExperience{Id = 1, Name = "Noobs Tournament", Position = 23, UserProfileId = 1},
                 new TournamentExperience{Id = 2, Name = "PUBG Championship", Position = 1, UserProfileId = 2},
                 new TournamentExperience{Id = 3, Name = "CODM Championship", Position = 7, UserProfileId = 3}
+            );
+            
+            // Profiles: FavoriteGames
+            builder.Entity<FavoriteGame>().ToTable("FavoriteGames");
+            builder.Entity<FavoriteGame>().HasKey(fg => fg.Id);
+            builder.Entity<FavoriteGame>().Property(fg => fg.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<FavoriteGame>().Property(fg => fg.GameName).IsRequired();
+            builder.Entity<FavoriteGame>().Property(fg => fg.UserProfileId).IsRequired();
+
+            builder.Entity<FavoriteGame>().HasData
+            (
+                new FavoriteGame{Id = 1, GameName = "Among Us", UserProfileId = 1},
+                new FavoriteGame{Id = 2, GameName = "Call of Duty", UserProfileId = 2},
+                new FavoriteGame{Id = 3, GameName = "Free Fire", UserProfileId = 3}
             );
 
             //Profiles
