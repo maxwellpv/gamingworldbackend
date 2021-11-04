@@ -45,20 +45,31 @@ namespace GamingWorld.API.Persistence.Context
             );
             
 
+            // Profiles: GameExperiences
             builder.Entity<GameExperience>().ToTable("GameExperiences");
             builder.Entity<GameExperience>().HasKey(ge => ge.Id);
             builder.Entity<GameExperience>().Property(ge => ge.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<GameExperience>().Property(ge => ge.GameName).IsRequired();
             builder.Entity<GameExperience>().Property(ge => ge.Time).IsRequired();
             builder.Entity<GameExperience>().Property(ge => ge.TimeUnit).IsRequired();
-            builder.Entity<GameExperience>().HasOne(ge => ge.UserProfile).WithMany(p => p.GameExperiences)
-                .HasForeignKey("UserProfileId").OnDelete(DeleteBehavior.Cascade);
-
             builder.Entity<GameExperience>().HasData
             (
                 new GameExperience{Id = 1, GameName = "Among Us", Time = 5, TimeUnit = EGameExperienceTime.M, UserProfileId = 1},
                 new GameExperience{Id = 2, GameName = "Call of Duty", Time = 4, TimeUnit = EGameExperienceTime.Y, UserProfileId = 2},
                 new GameExperience{Id = 3, GameName = "Manco's Combat", Time = 25, TimeUnit = EGameExperienceTime.D, UserProfileId = 3}
+            );
+            
+            // Profiles: StreamingCategories
+            builder.Entity<StreamingCategory>().ToTable("StreamingCategories");
+            builder.Entity<StreamingCategory>().HasKey(ge => ge.Id);
+            builder.Entity<StreamingCategory>().Property(ge => ge.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<StreamingCategory>().Property(ge => ge.Name).IsRequired();
+
+            builder.Entity<StreamingCategory>().HasData
+            (
+                new StreamingCategory{Id = 1, Name = "Battle Royale", UserProfileId = 1},
+                new StreamingCategory{Id = 2, Name = "First Person Shooter", UserProfileId = 2},
+                new StreamingCategory{Id = 3, Name = "Battle Royale", UserProfileId = 3}
             );
 
             //Profiles

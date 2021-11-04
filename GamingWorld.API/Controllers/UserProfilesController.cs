@@ -31,6 +31,14 @@ namespace GamingWorld.API.Controllers
             var resources = _mapper.Map<IEnumerable<UserProfile>, IEnumerable<UserProfileResource>>(profiles);
             return resources;
         }
+        
+        [HttpGet("{id}")]
+        public async Task<UserProfileResource> GetById(int id)
+        {
+            var profile = await _uProfileService.ListByUserIdAsync(id);
+            var resources = _mapper.Map<UserProfile, UserProfileResource>(profile);
+            return resources;
+        }
 
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] SaveUserProfileResource resource)

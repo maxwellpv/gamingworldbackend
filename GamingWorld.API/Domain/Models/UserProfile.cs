@@ -12,7 +12,9 @@ namespace GamingWorld.API.Domain.Models
         public bool IsStreamer { get; set; }
         
         public User User { get; set; }
-        public IList<GameExperience> GameExperiences { get; set; }
+        public IEnumerable<GameExperience> GameExperiences { get; set; }
+        
+        public IEnumerable<StreamingCategory> StreamingCategories { get; set; }
         
     }
 }

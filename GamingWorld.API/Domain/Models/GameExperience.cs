@@ -11,6 +11,6 @@ namespace GamingWorld.API.Domain.Models
         
         // Relations
         public int UserProfileId { get; set; }
-        public UserProfile UserProfile { get; set; }
+        //public UserProfile UserProfile { get; set; }
     }
 }

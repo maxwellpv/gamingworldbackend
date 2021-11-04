@@ -17,6 +17,8 @@ namespace GamingWorld.API.Resources
         [Required]
         public bool IsStreamer { get; set; }
         
+        // Relations
         public IEnumerable<GameExperience> GameExperiences { get; set; }
+        public IEnumerable<StreamingCategory> StreamingCategories { get; set; }
     }
 }
