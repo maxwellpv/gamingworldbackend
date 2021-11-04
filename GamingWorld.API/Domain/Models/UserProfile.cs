@@ -16,5 +16,6 @@ namespace GamingWorld.API.Domain.Models
         
         public IEnumerable<StreamingCategory> StreamingCategories { get; set; }
         
+        public IEnumerable<StreamerSponsor> StreamerSponsors { get; set; }
     }
 }

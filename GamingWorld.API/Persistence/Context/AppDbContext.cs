@@ -61,15 +61,28 @@ namespace GamingWorld.API.Persistence.Context
             
             // Profiles: StreamingCategories
             builder.Entity<StreamingCategory>().ToTable("StreamingCategories");
-            builder.Entity<StreamingCategory>().HasKey(ge => ge.Id);
-            builder.Entity<StreamingCategory>().Property(ge => ge.Id).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<StreamingCategory>().Property(ge => ge.Name).IsRequired();
+            builder.Entity<StreamingCategory>().HasKey(sc => sc.Id);
+            builder.Entity<StreamingCategory>().Property(sc => sc.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<StreamingCategory>().Property(sc => sc.Name).IsRequired();
 
             builder.Entity<StreamingCategory>().HasData
             (
                 new StreamingCategory{Id = 1, Name = "Battle Royale", UserProfileId = 1},
                 new StreamingCategory{Id = 2, Name = "First Person Shooter", UserProfileId = 2},
                 new StreamingCategory{Id = 3, Name = "Battle Royale", UserProfileId = 3}
+            );
+            
+            // Profiles: StreamerSponsors
+            builder.Entity<StreamerSponsor>().ToTable("StreamerSponsors");
+            builder.Entity<StreamerSponsor>().HasKey(ss => ss.Id);
+            builder.Entity<StreamerSponsor>().Property(ss => ss.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<StreamerSponsor>().Property(ss => ss.Name).IsRequired();
+
+            builder.Entity<StreamerSponsor>().HasData
+            (
+                new StreamerSponsor{Id = 1, Name = "Coca Cola", UserProfileId = 1},
+                new StreamerSponsor{Id = 2, Name = "Pepsi", UserProfileId = 2},
+                new StreamerSponsor{Id = 3, Name = "Fanta", UserProfileId = 3}
             );
 
             //Profiles
@@ -80,6 +93,8 @@ namespace GamingWorld.API.Persistence.Context
             builder.Entity<UserProfile>().Property(p => p.GamingLevel).IsRequired();
             builder.Entity<UserProfile>().Property(p => p.IsStreamer).IsRequired();
             builder.Entity<UserProfile>().HasMany(p => p.GameExperiences).WithOne();
+            builder.Entity<UserProfile>().HasMany(p => p.StreamingCategories).WithOne();
+            builder.Entity<UserProfile>().HasMany(p => p.StreamerSponsors).WithOne();
 
             builder.Entity<UserProfile>().HasData
             (

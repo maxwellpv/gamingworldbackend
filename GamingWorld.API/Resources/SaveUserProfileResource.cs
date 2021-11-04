@@ -20,5 +20,6 @@ namespace GamingWorld.API.Resources
         // Relations
         public IEnumerable<GameExperience> GameExperiences { get; set; }
         public IEnumerable<StreamingCategory> StreamingCategories { get; set; }
+        public IEnumerable<StreamerSponsor> StreamerSponsors { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace GamingWorld.API.Persistence.Repositories
             return await _context.Profiles
                 .Include(up => up.GameExperiences)
                 .Include(up => up.StreamingCategories)
+                .Include(up => up.StreamerSponsors)
                 .ToListAsync();
         }
 
@@ -33,6 +34,7 @@ namespace GamingWorld.API.Persistence.Repositories
             return await _context.Profiles
                 .Include(up => up.GameExperiences)
                 .Include(up => up.StreamingCategories)
+                .Include(up => up.StreamerSponsors)
                 .FirstOrDefaultAsync(up => up.Id == id);
         }
 
@@ -42,6 +44,7 @@ namespace GamingWorld.API.Persistence.Repositories
             return await _context.Profiles
                 .Include(up => up.GameExperiences)
                 .Include(up => up.StreamingCategories)
+                .Include(up => up.StreamerSponsors)
                 .FirstOrDefaultAsync(up => up.UserId == userId);
         }
 
