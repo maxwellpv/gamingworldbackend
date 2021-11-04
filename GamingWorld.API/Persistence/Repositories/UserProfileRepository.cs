@@ -20,6 +20,7 @@ namespace GamingWorld.API.Persistence.Repositories
                 .Include(up => up.GameExperiences)
                 .Include(up => up.StreamingCategories)
                 .Include(up => up.StreamerSponsors)
+                .Include(up => up.TournamentExperiences)
                 .ToListAsync();
         }
 
@@ -35,6 +36,7 @@ namespace GamingWorld.API.Persistence.Repositories
                 .Include(up => up.GameExperiences)
                 .Include(up => up.StreamingCategories)
                 .Include(up => up.StreamerSponsors)
+                .Include(up => up.TournamentExperiences)
                 .FirstOrDefaultAsync(up => up.Id == id);
         }
 
@@ -45,6 +47,7 @@ namespace GamingWorld.API.Persistence.Repositories
                 .Include(up => up.GameExperiences)
                 .Include(up => up.StreamingCategories)
                 .Include(up => up.StreamerSponsors)
+                .Include(up => up.TournamentExperiences)
                 .FirstOrDefaultAsync(up => up.UserId == userId);
         }
 

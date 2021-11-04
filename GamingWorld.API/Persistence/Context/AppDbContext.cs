@@ -84,6 +84,20 @@ namespace GamingWorld.API.Persistence.Context
                 new StreamerSponsor{Id = 2, Name = "Pepsi", UserProfileId = 2},
                 new StreamerSponsor{Id = 3, Name = "Fanta", UserProfileId = 3}
             );
+            
+            // Profiles: TournamentExperiences
+            builder.Entity<TournamentExperience>().ToTable("TournamentExperiences");
+            builder.Entity<TournamentExperience>().HasKey(te => te.Id);
+            builder.Entity<TournamentExperience>().Property(te => te.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<TournamentExperience>().Property(te => te.Name).IsRequired();
+            builder.Entity<TournamentExperience>().Property(te => te.Position).IsRequired();
+
+            builder.Entity<TournamentExperience>().HasData
+            (
+                new TournamentExperience{Id = 1, Name = "Noobs Tournament", Position = 23, UserProfileId = 1},
+                new TournamentExperience{Id = 2, Name = "PUBG Championship", Position = 1, UserProfileId = 2},
+                new TournamentExperience{Id = 3, Name = "CODM Championship", Position = 7, UserProfileId = 3}
+            );
 
             //Profiles
             builder.Entity<UserProfile>().ToTable("Profiles");
