@@ -10,6 +10,12 @@ namespace GamingWorld.API.Mapping
         {
             CreateMap<SaveUserResource, User>();
             CreateMap<SavePublicationResource, Publication>();
+            CreateMap<SaveUserProfileResource, UserProfile>()
+                .ForMember(target =>
+                        target.GamingLevel,
+                    options =>
+                        options.MapFrom(source =>
+                            (EGamingLevel) source.GamingLevel));
         }
     }
 }

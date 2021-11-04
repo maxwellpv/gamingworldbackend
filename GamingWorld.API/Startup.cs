@@ -61,10 +61,13 @@ namespace GamingWorld.API
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
-
+            
             services.AddScoped<IPublicationRepository, PublicationRepository>();
             services.AddScoped<IPublicationService, PublicationService>();
 
+            services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+            services.AddScoped<IUProfileService, UserProfileService>();
+            
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(Startup));
         }
