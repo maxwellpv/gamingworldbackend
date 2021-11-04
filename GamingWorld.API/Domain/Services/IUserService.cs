@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using GamingWorld.API.Domain.Models;
-using GamingWorld.API.Services.Communication;
+using GamingWorld.API.Domain.Services.Communication;
 
 namespace GamingWorld.API.Domain.Services
 {

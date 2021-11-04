@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace GamingWorld.API.Extensions
 {
     public static class StringExtensions
@@ -34,3 +33,4 @@ namespace GamingWorld.API.Extensions
         }
     }
 }
+

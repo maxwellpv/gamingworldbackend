@@ -1,4 +1,4 @@
-﻿namespace GamingWorld.API.Services.Communication
+﻿namespace GamingWorld.API.Domain.Services.Communication
 {
     public class BaseResponse<T>
     {

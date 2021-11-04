@@ -35,9 +35,23 @@ namespace GamingWorld.API
         {
             services.AddControllers();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllHeaders",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+
+            services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
+
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseInMemoryDatabase("gaming-world-api");
+                //options.UseInMemoryDatabase("supermarket-api-in-memory");
+                options.UseMySQL(Configuration.GetConnectionString("Default"));
             });
             
             services.AddSwaggerGen(c =>
@@ -47,7 +61,10 @@ namespace GamingWorld.API
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
-            
+
+            services.AddScoped<IPublicationRepository, PublicationRepository>();
+            services.AddScoped<IPublicationService, PublicationService>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(Startup));
         }
@@ -61,6 +78,8 @@ namespace GamingWorld.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GamingWorld.API v1"));
             }
+
+            app.UseCors("AllowAllHeaders");
 
             app.UseHttpsRedirection();
 

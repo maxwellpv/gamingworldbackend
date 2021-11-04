@@ -9,6 +9,7 @@ namespace GamingWorld.API.Mapping
         public ResourceToModelProfile()
         {
             CreateMap<SaveUserResource, User>();
+            CreateMap<SavePublicationResource, Publication>();
         }
     }
 }

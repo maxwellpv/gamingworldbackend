@@ -6,6 +6,7 @@ namespace GamingWorld.API.Persistence.Context
     public class AppDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Publication> Publications { get; set; }
         
         public AppDbContext(DbContextOptions options) : base(options)
         {
@@ -30,6 +31,22 @@ namespace GamingWorld.API.Persistence.Context
                 new User { Id = 3, Username = "RatPalyer", Email = "minecra@gmail.com", Password = "awadecoco", Premium = true},
                 new User { Id = 4, Username = "Loel76", Email = "loel76@hotmail.es", Password = "xdxdxd", Premium = false}
             );
+            
+            //Publications
+
+            //Constraints
+            builder.Entity<Publication>().ToTable("Publications");
+            builder.Entity<Publication>().HasKey(p => p.Id);
+            builder.Entity<Publication>().Property(p => p.Title).IsRequired();
+            builder.Entity<Publication>().Property(p => p.Content).IsRequired();
+            builder.Entity<Publication>().Property(p => p.PublicatedAt).IsRequired();
+            builder.Entity<Publication>().Property(p => p.PublicationType).IsRequired();
+            builder.Entity<Publication>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+
+            //Relationships
+
+            // Seed Data
+            //builder.Entity<Publication>().HasData();
         }
     }
 }
