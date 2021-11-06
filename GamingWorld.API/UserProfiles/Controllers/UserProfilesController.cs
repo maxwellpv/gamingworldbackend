@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using GamingWorld.API.Shared.Extensions;
 using GamingWorld.API.UserProfiles.Domain.Models;
 using GamingWorld.API.UserProfiles.Domain.Services;
-using GamingWorld.API.UserProfiles.Extensions;
 using GamingWorld.API.UserProfiles.Resources;
 using Microsoft.AspNetCore.Mvc;
 

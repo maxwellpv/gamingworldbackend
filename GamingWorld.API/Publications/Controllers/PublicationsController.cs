@@ -4,7 +4,7 @@ using AutoMapper;
 using GamingWorld.API.Publications.Domain.Models;
 using GamingWorld.API.Publications.Domain.Services;
 using GamingWorld.API.Publications.Resources;
-using GamingWorld.API.UserProfiles.Extensions;
+using GamingWorld.API.Shared.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GamingWorld.API.Publications.Controllers

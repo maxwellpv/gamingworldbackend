@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace GamingWorld.API.UserProfiles.Extensions
+namespace GamingWorld.API.Shared.Extensions
 {
     public static class ModelStateExtensions
     {

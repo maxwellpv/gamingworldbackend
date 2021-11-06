@@ -1,6 +1,6 @@
 ﻿using GamingWorld.API.Publications.Domain.Models;
+using GamingWorld.API.Shared.Extensions;
 using GamingWorld.API.UserProfiles.Domain.Models;
-using GamingWorld.API.UserProfiles.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace GamingWorld.API.UserProfiles.Persistence.Context
@@ -18,6 +18,25 @@ namespace GamingWorld.API.UserProfiles.Persistence.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            
+            //Profiles
+            builder.Entity<UserProfile>().ToTable("Profiles");
+            builder.Entity<UserProfile>().HasKey(p => p.Id);
+            builder.Entity<UserProfile>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<UserProfile>().Property(p => p.UserId).IsRequired();
+            builder.Entity<UserProfile>().Property(p => p.GamingLevel).IsRequired();
+            builder.Entity<UserProfile>().Property(p => p.IsStreamer).IsRequired();
+            builder.Entity<UserProfile>().HasMany(p => p.GameExperiences).WithOne();
+            builder.Entity<UserProfile>().HasMany(p => p.StreamingCategories).WithOne();
+            builder.Entity<UserProfile>().HasMany(p => p.StreamerSponsors).WithOne();
+
+            builder.Entity<UserProfile>().HasData
+            (
+                new UserProfile{Id = 1, UserId = 1, GamingLevel = EGamingLevel.A, IsStreamer = true},
+                new UserProfile{Id = 2, UserId = 2, GamingLevel = EGamingLevel.N, IsStreamer = true},
+                new UserProfile{Id = 3, UserId = 3, GamingLevel = EGamingLevel.M, IsStreamer = false},
+                new UserProfile{Id = 4, UserId = 4, GamingLevel = EGamingLevel.A, IsStreamer = false}
+            );
             
             // Profiles: GameExperiences
             builder.Entity<GameExperience>().ToTable("GameExperiences");
@@ -88,25 +107,7 @@ namespace GamingWorld.API.UserProfiles.Persistence.Context
                 new FavoriteGame{Id = 3, GameName = "Free Fire", UserProfileId = 3}
             );
 
-            //Profiles
-            builder.Entity<UserProfile>().ToTable("Profiles");
-            builder.Entity<UserProfile>().HasKey(p => p.Id);
-            builder.Entity<UserProfile>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<UserProfile>().Property(p => p.UserId).IsRequired();
-            builder.Entity<UserProfile>().Property(p => p.GamingLevel).IsRequired();
-            builder.Entity<UserProfile>().Property(p => p.IsStreamer).IsRequired();
-            builder.Entity<UserProfile>().HasMany(p => p.GameExperiences).WithOne();
-            builder.Entity<UserProfile>().HasMany(p => p.StreamingCategories).WithOne();
-            builder.Entity<UserProfile>().HasMany(p => p.StreamerSponsors).WithOne();
-
-            builder.Entity<UserProfile>().HasData
-            (
-                new UserProfile{Id = 1, UserId = 1, GamingLevel = EGamingLevel.A, IsStreamer = true},
-                new UserProfile{Id = 2, UserId = 2, GamingLevel = EGamingLevel.N, IsStreamer = true},
-                new UserProfile{Id = 3, UserId = 3, GamingLevel = EGamingLevel.M, IsStreamer = false},
-                new UserProfile{Id = 4, UserId = 4, GamingLevel = EGamingLevel.A, IsStreamer = false}
-            );
-
+            
             builder.UseSnakeCaseNamingConvention();
 
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GamingWorld.API.Users.Extensions
+namespace GamingWorld.API.Shared.Extensions
 {
     public static class StringExtensions
     {
@@ -14,6 +14,8 @@ namespace GamingWorld.API.Users.Extensions
 
                 if (char.IsUpper(e.Current))
                     yield return char.ToLower(e.Current);
+                else
+                    yield return e.Current;
 
                 while (e.MoveNext())
                 {
@@ -33,4 +35,3 @@ namespace GamingWorld.API.Users.Extensions
         }
     }
 }
-

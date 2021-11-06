@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
 
-namespace GamingWorld.API.UserProfiles.Extensions
+namespace GamingWorld.API.Shared.Extensions
 {
     public static class EnumExtensions
     {

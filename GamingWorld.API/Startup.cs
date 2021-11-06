@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using GamingWorld.API.Publications.Domain.Repositories;
@@ -45,7 +46,7 @@ namespace GamingWorld.API
         {
             services.AddControllers();
 
-            services.AddCors(options =>
+                services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllHeaders",
                     builder =>
@@ -66,9 +67,11 @@ namespace GamingWorld.API
             
             services.AddSwaggerGen(c =>
             {
+                c.DocumentFilter<SnakeCaseDocumentFilter>();
+                c.OperationFilter<SnakeCaseOperationFilter>();
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "GamingWorld.API", Version = "v1"});
             });
-
+            
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             

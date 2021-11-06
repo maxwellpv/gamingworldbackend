@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using GamingWorld.API.UserProfiles.Extensions;
+using GamingWorld.API.Shared.Extensions;
 using GamingWorld.API.Users.Domain.Services;
 using GamingWorld.API.Users.Resources;
 using Microsoft.AspNetCore.Mvc;

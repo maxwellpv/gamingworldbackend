@@ -1,4 +1,4 @@
-﻿using GamingWorld.API.UserProfiles.Extensions;
+﻿using GamingWorld.API.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace GamingWorld.API.Users.Persistence.Context
