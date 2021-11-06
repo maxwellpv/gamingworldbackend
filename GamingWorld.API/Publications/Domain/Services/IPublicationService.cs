@@ -10,6 +10,8 @@ namespace GamingWorld.API.Publications.Domain.Services
         Task<IEnumerable<Publication>> ListAsync();
         
         Task<IEnumerable<Publication>> ListByTypeAsync(int type);
+        
+        Task<Publication> GetById(int id);
 
         Task<PublicationResponse> SaveAsync(Publication publication);
 

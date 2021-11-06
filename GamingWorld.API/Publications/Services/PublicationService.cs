@@ -35,6 +35,11 @@ namespace GamingWorld.API.Publications.Services
             return filter;
         }
 
+        public async Task<Publication> GetById(int id)
+        {
+            return await _publicationRepository.FindByIdAsync(id);
+        }
+
         public async Task<PublicationResponse> SaveAsync(Publication publication)
         {
             try

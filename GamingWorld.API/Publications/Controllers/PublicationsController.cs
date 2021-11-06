@@ -40,6 +40,13 @@ namespace GamingWorld.API.Publications.Controllers
             }
             
         }
+        [HttpGet("{id}")]
+        public async Task<PublicationResource> GetById(int id)
+        {
+            var publication = await _publicationService.GetById(id);
+            var resource = _mapper.Map<Publication, PublicationResource>(publication);
+            return resource;
+        }
         
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] SavePublicationResource resource)
