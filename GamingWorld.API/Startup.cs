@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
+using GamingWorld.API.Profiles.Domain.Repositories;
+using GamingWorld.API.Profiles.Domain.Services;
+using GamingWorld.API.Profiles.Persistence.Context;
+using GamingWorld.API.Profiles.Persistence.Repositories;
+using GamingWorld.API.Profiles.Services;
 using GamingWorld.API.Publications.Domain.Repositories;
 using GamingWorld.API.Publications.Domain.Services;
 using GamingWorld.API.Publications.Persistence.Repositories;
 using GamingWorld.API.Publications.Services;
-using GamingWorld.API.UserProfiles.Domain.Repositories;
-using GamingWorld.API.UserProfiles.Domain.Services;
-using GamingWorld.API.UserProfiles.Persistence.Context;
-using GamingWorld.API.UserProfiles.Persistence.Repositories;
-using GamingWorld.API.UserProfiles.Services;
 using GamingWorld.API.Users.Domain.Repositories;
 using GamingWorld.API.Users.Domain.Services;
 using GamingWorld.API.Users.Persistence.Repositories;
@@ -28,7 +28,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using IUnitOfWork = GamingWorld.API.Users.Domain.Repositories.IUnitOfWork;
-using UnitOfWork = GamingWorld.API.UserProfiles.Persistence.Repositories.UnitOfWork;
+using UnitOfWork = GamingWorld.API.Profiles.Persistence.Repositories.UnitOfWork;
 
 namespace GamingWorld.API
 {
@@ -78,8 +78,8 @@ namespace GamingWorld.API
             services.AddScoped<IPublicationRepository, PublicationRepository>();
             services.AddScoped<IPublicationService, PublicationService>();
 
-            services.AddScoped<IUserProfileRepository, UserProfileRepository>();
-            services.AddScoped<IUProfileService, UserProfileService>();
+            services.AddScoped<IProfileRepository, ProfileRepository>();
+            services.AddScoped<IUProfileService, ProfileService>();
             
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(Startup));

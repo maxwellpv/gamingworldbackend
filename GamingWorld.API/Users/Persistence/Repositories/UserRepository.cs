@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using GamingWorld.API.UserProfiles.Persistence.Context;
+using GamingWorld.API.Profiles.Persistence.Context;
 using GamingWorld.API.Users.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 

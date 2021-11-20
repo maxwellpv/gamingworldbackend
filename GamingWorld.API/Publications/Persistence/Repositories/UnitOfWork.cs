@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using GamingWorld.API.UserProfiles.Persistence.Context;
+using GamingWorld.API.Profiles.Persistence.Context;
 
 namespace GamingWorld.API.Publications.Persistence.Repositories
 {

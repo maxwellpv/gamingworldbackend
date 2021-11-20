@@ -1,6 +1,6 @@
 ﻿using GamingWorld.API.Profiles.Persistence.Context;
 
-namespace GamingWorld.API.Users.Persistence.Repositories
+namespace GamingWorld.API.Profiles.Persistence.Repositories
 {
     public class BaseRepository
     {
