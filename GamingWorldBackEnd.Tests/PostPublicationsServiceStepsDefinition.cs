@@ -23,7 +23,6 @@ namespace GamingWorldBackEnd.Tests
         private HttpClient _client;
         private Uri _baseUri;
         private Task<HttpResponseMessage> Response { get; set; }
-
         public PublicationServiceStepsDefinition(WebApplicationFactory<Startup> factory)
         {
             _factory = factory;
