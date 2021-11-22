@@ -25,6 +25,7 @@ namespace GamingWorld.API.Security.Authorization.Handlers.Implementations
             // Generate Token for a valid period of 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]

@@ -12,6 +12,10 @@ using GamingWorld.API.Publications.Domain.Repositories;
 using GamingWorld.API.Publications.Domain.Services;
 using GamingWorld.API.Publications.Persistence.Repositories;
 using GamingWorld.API.Publications.Services;
+using GamingWorld.API.Security.Authorization.Handlers.Implementations;
+using GamingWorld.API.Security.Authorization.Handlers.Interfaces;
+using GamingWorld.API.Security.Authorization.Middleware;
+using GamingWorld.API.Security.Authorization.Settings;
 using GamingWorld.API.Security.Domain.Repositories;
 using GamingWorld.API.Security.Domain.Services;
 using GamingWorld.API.Security.Persistence.Repositories;
@@ -44,21 +48,10 @@ namespace GamingWorld.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers();
-
-                services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAllHeaders",
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                    });
-            });
-
-            services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
-
+            services.AddRouting(options => options.LowercaseUrls = true);
+            
             services.AddDbContext<AppDbContext>(options =>
             {
                 //options.UseInMemoryDatabase("supermarket-api-in-memory");
@@ -71,6 +64,8 @@ namespace GamingWorld.API
                 c.OperationFilter<SnakeCaseOperationFilter>();
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "GamingWorld.API", Version = "v1"});
             });
+
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
@@ -82,7 +77,10 @@ namespace GamingWorld.API
             services.AddScoped<IUProfileService, ProfileService>();
             
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddAutoMapper(typeof(Startup));
+            
+            services.AddScoped<IJwtHandler, JwtHandler>();
+            
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,8 +92,15 @@ namespace GamingWorld.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GamingWorld.API v1"));
             }
+            
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
-            app.UseCors("AllowAllHeaders");
+            app.UseMiddleware<JwtMiddleware>();
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseHttpsRedirection();
 

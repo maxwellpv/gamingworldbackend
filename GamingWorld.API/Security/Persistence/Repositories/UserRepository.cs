@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GamingWorld.API.Security.Domain.Models;
 using GamingWorld.API.Security.Domain.Repositories;
@@ -32,6 +33,11 @@ namespace GamingWorld.API.Security.Persistence.Repositories
         public async Task<User> FindByUsernameAsync(string username)
         {
             return await _context.Users.FirstOrDefaultAsync(p => p.Username == username);
+        }
+
+        public bool ExistsByUserName(string username)
+        {
+            return _context.Users.Any(u => u.Username == username);
         }
 
         public async Task<User> FindByEmailAsync(string email)

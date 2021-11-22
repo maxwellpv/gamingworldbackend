@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
+using GamingWorld.API.Security.Authorization.Handlers.Interfaces;
 using GamingWorld.API.Security.Domain.Models;
 using GamingWorld.API.Security.Domain.Repositories;
 using GamingWorld.API.Security.Domain.Services;
 using GamingWorld.API.Security.Domain.Services.Communication;
+using GamingWorld.API.Security.Exceptions;
 using GamingWorld.API.Shared.Domain.Repositories;
+using GamingWorld.API.Shared.Extensions;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace GamingWorld.API.Security.Services
 {
@@ -13,11 +18,57 @@ namespace GamingWorld.API.Security.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IJwtHandler _jwtHandler;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper, IJwtHandler jwtHandler)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
+            _jwtHandler = jwtHandler;
+        }
+
+        public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest request)
+        {
+            var user = await _userRepository.FindByUsernameAsync(request.Username);
+            //Validate
+            if (user == null || !BCryptNet.Verify(request.Password, user.PasswordHash))
+                throw new AppException("Username or password is incorrect");
+            
+            
+            
+            //Authentication successful
+            var response = _mapper.Map<AuthenticateResponse>(user);
+
+            response.Token = _jwtHandler.GenerateToken(user);
+
+            return response;
+        }
+
+        public async Task RegisterAsync(RegisterRequest request)
+        {
+            //Validate
+            if (_userRepository.ExistsByUserName(request.Username))
+                throw new AppException($"Username {request.Username} is already taken.");
+            
+            //Map request to User object
+            var user = _mapper.Map<User>(request);
+            
+            
+            //Has password
+            user.PasswordHash = BCryptNet.HashPassword(request.Password);
+            
+            //Save User
+            try
+            {
+                await _userRepository.AddAsync(user);
+                await _unitOfWork.CompleteAsync();
+            }
+            catch (Exception e)
+            {
+                throw new AppException($"An error occurred while saving the user: {user}");
+            }
         }
 
         public async Task<IEnumerable<User>> ListAsync()
@@ -76,7 +127,6 @@ namespace GamingWorld.API.Security.Services
 
             existingUserById.Email = user.Email;
             existingUserById.Username = user.Username;
-            existingUserById.Password = user.Password;
             existingUserById.Premium = user.Premium;
 
             try

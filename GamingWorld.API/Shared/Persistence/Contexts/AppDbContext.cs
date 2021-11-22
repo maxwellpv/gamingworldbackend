@@ -127,17 +127,10 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
             builder.Entity<User>().HasKey(p => p.Id);
             builder.Entity<User>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<User>().Property(p => p.Username).IsRequired().HasMaxLength(30);
+            builder.Entity<User>().Property(p => p.FirstName).IsRequired().HasMaxLength(30);
+            builder.Entity<User>().Property(p => p.LastName).IsRequired().HasMaxLength(30);
             builder.Entity<User>().Property(p => p.Email).IsRequired().HasMaxLength(50);
-            builder.Entity<User>().Property(p => p.Password).IsRequired().HasMaxLength(30);
             builder.Entity<User>().Property(p => p.Premium).IsRequired();
-            
-            builder.Entity<User>().HasData
-            (
-                new User { Id = 1, Username = "Fjorpa", Email = "fjorpa@hotmail.com", Password = "123456", Premium = true},
-                new User { Id = 2, Username = "GoldenX", Email = "goldenx@teyapeo.pe", Password = "helpme", Premium = false},
-                new User { Id = 3, Username = "RatPalyer", Email = "minecra@gmail.com", Password = "awadecoco", Premium = true},
-                new User { Id = 4, Username = "Loel76", Email = "loel76@hotmail.es", Password = "xdxdxd", Premium = false}
-            );
 
             builder.UseSnakeCaseNamingConvention();
 

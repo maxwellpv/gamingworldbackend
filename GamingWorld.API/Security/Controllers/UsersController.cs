@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using GamingWorld.API.Security.Authorization.Attributes;
 using GamingWorld.API.Security.Domain.Services;
+using GamingWorld.API.Security.Domain.Services.Communication;
 using GamingWorld.API.Security.Resources;
 using GamingWorld.API.Shared.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GamingWorld.API.Security.Controllers
 {
+    [Authorize]
+    [ApiController]
     [Route("/api/v1/[controller]")]
     public class UsersController : ControllerBase
     {
@@ -18,6 +22,22 @@ namespace GamingWorld.API.Security.Controllers
         {
             _userService = userService;
             _mapper = mapper;
+        }
+        
+        [AllowAnonymous]
+        [HttpPost("auth/sign-in")]
+        public async Task<IActionResult> Authenticate( AuthenticateRequest request)
+        {
+            var response = await _userService.Authenticate(request);
+            return Ok(response);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("auth/sign-up")]
+        public async Task<IActionResult> Register( RegisterRequest request)
+        {
+            await _userService.RegisterAsync(request);
+            return Ok(new {message = "Registration successful."});
         }
 
         [HttpGet]
