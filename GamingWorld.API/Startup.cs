@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 using AutoMapper;
 using GamingWorld.API.Profiles.Domain.Repositories;
 using GamingWorld.API.Profiles.Domain.Services;
-using GamingWorld.API.Profiles.Persistence.Context;
 using GamingWorld.API.Profiles.Persistence.Repositories;
 using GamingWorld.API.Profiles.Services;
 using GamingWorld.API.Publications.Domain.Repositories;
 using GamingWorld.API.Publications.Domain.Services;
 using GamingWorld.API.Publications.Persistence.Repositories;
 using GamingWorld.API.Publications.Services;
-using GamingWorld.API.Users.Domain.Repositories;
-using GamingWorld.API.Users.Domain.Services;
-using GamingWorld.API.Users.Persistence.Repositories;
-using GamingWorld.API.Users.Services;
+using GamingWorld.API.Security.Domain.Repositories;
+using GamingWorld.API.Security.Domain.Services;
+using GamingWorld.API.Security.Persistence.Repositories;
+using GamingWorld.API.Security.Services;
+using GamingWorld.API.Shared.Persistence.Contexts;
+using GamingWorld.API.Shared.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,8 +28,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using IUnitOfWork = GamingWorld.API.Users.Domain.Repositories.IUnitOfWork;
-using UnitOfWork = GamingWorld.API.Profiles.Persistence.Repositories.UnitOfWork;
+using IUnitOfWork = GamingWorld.API.Shared.Domain.Repositories.IUnitOfWork;
 
 namespace GamingWorld.API
 {

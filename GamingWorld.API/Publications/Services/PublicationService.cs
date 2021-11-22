@@ -6,7 +6,7 @@ using GamingWorld.API.Publications.Domain.Models;
 using GamingWorld.API.Publications.Domain.Repositories;
 using GamingWorld.API.Publications.Domain.Services;
 using GamingWorld.API.Publications.Domain.Services.Communication;
-using IUnitOfWork = GamingWorld.API.Users.Domain.Repositories.IUnitOfWork;
+using IUnitOfWork = GamingWorld.API.Shared.Domain.Repositories.IUnitOfWork;
 
 namespace GamingWorld.API.Publications.Services
 {
