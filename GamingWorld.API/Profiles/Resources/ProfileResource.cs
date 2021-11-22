@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using GamingWorld.API.Profiles.Domain.Models;
-using GamingWorld.API.Users.Resources;
+using GamingWorld.API.Security.Resources;
 
 namespace GamingWorld.API.Profiles.Resources
 {

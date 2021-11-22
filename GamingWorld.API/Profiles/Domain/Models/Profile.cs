@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GamingWorld.API.Security.Domain.Models;
 
 namespace GamingWorld.API.Profiles.Domain.Models
 {
@@ -9,7 +10,7 @@ namespace GamingWorld.API.Profiles.Domain.Models
         public EGamingLevel GamingLevel { get; set; }
         public bool IsStreamer { get; set; }
         
-        public Users.Domain.Models.User User { get; set; }
+        public User User { get; set; }
         public IEnumerable<GameExperience> GameExperiences { get; set; }
         
         public IEnumerable<StreamingCategory> StreamingCategories { get; set; }

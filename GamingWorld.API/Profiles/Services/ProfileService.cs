@@ -5,8 +5,8 @@ using GamingWorld.API.Profiles.Domain.Models;
 using GamingWorld.API.Profiles.Domain.Repositories;
 using GamingWorld.API.Profiles.Domain.Services;
 using GamingWorld.API.Profiles.Domain.Services.Communication;
-using GamingWorld.API.Users.Domain.Repositories;
-using IUnitOfWork = GamingWorld.API.Users.Domain.Repositories.IUnitOfWork;
+using GamingWorld.API.Security.Domain.Repositories;
+using IUnitOfWork = GamingWorld.API.Shared.Domain.Repositories.IUnitOfWork;
 
 namespace GamingWorld.API.Profiles.Services
 {

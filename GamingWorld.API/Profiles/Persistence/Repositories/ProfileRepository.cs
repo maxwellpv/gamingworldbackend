@@ -2,7 +2,8 @@
 using System.Threading.Tasks;
 using GamingWorld.API.Profiles.Domain.Models;
 using GamingWorld.API.Profiles.Domain.Repositories;
-using GamingWorld.API.Profiles.Persistence.Context;
+using GamingWorld.API.Shared.Persistence.Contexts;
+using GamingWorld.API.Shared.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace GamingWorld.API.Profiles.Persistence.Repositories
