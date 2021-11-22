@@ -1,4 +1,4 @@
-﻿using GamingWorld.API.UserProfiles.Domain.Services.Communication;
+﻿using GamingWorld.API.Profiles.Domain.Services.Communication;
 
 namespace GamingWorld.API.Users.Domain.Services.Communication
 {
