@@ -2,6 +2,7 @@
 using GamingWorld.API.Publications.Domain.Models;
 using GamingWorld.API.Security.Domain.Models;
 using GamingWorld.API.Shared.Extensions;
+using GamingWorld.API.Shared.Inbound.ExternalAPIs.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GamingWorld.API.Shared.Persistence.Contexts
@@ -11,6 +12,7 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<Publication> Publications { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<ExternalAPI> ExternalApis { get; set; }
 
         public AppDbContext(DbContextOptions options) : base(options)
         {
