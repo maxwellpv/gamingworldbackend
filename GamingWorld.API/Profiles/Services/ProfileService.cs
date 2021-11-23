@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GamingWorld.API.Profiles.Domain.Models;
 using GamingWorld.API.Profiles.Domain.Repositories;
@@ -61,14 +62,13 @@ namespace GamingWorld.API.Profiles.Services
 
             if (existingProfile == null)
                 return new ProfileResponse("Profile not found.");
-
-            var user = await _userRepository.FindByIdAsync(profile.UserId);
-            if (user == null)
-                return new ProfileResponse("User not found");
-
-            existingProfile.UserId = profile.UserId;
+            
             existingProfile.GamingLevel = profile.GamingLevel;
             existingProfile.IsStreamer = profile.IsStreamer;
+            existingProfile.GameExperiences = profile.GameExperiences;
+            existingProfile.FavoriteGames = profile.FavoriteGames;
+            existingProfile.StreamingCategories = profile.StreamingCategories;
+            existingProfile.TournamentExperiences = profile.TournamentExperiences;
 
             try
             {
