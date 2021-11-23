@@ -33,6 +33,11 @@ namespace GamingWorld.API.Profiles.Services
             return await _profileRepository.FindByUserId(userId);
         }
 
+        public async Task<Profile> ListByIdAsync(int id)
+        {
+            return await _profileRepository.FindByIdAsync(id);
+        }
+
         public async Task<ProfileResponse> SaveAsync(Profile profile)
         {
             var existingUserId = await _profileRepository.FindByUserId(profile.UserId);

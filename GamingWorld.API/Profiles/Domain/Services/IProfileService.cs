@@ -9,6 +9,7 @@ namespace GamingWorld.API.Profiles.Domain.Services
     {
         Task<IEnumerable<Profile>> ListAsync();
         Task<Profile> ListByUserIdAsync(int userId);
+        Task<Profile> ListByIdAsync(int id);
         Task<ProfileResponse> SaveAsync(Profile profile);
         Task<ProfileResponse> UpdateAsync(int id, Profile profile);
         Task<ProfileResponse> DeleteAsync(int id);
