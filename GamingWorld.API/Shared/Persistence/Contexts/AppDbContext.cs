@@ -1,4 +1,5 @@
-﻿using GamingWorld.API.Profiles.Domain.Models;
+﻿using GamingWorld.API.Business.Domain.Models;
+using GamingWorld.API.Profiles.Domain.Models;
 using GamingWorld.API.Publications.Domain.Models;
 using GamingWorld.API.Security.Domain.Models;
 using GamingWorld.API.Shared.Extensions;
@@ -11,6 +12,8 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<Publication> Publications { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<Tournament> Tournaments { get; set; } 
+        public DbSet<Participant> Participants { get; set; } 
 
         public AppDbContext(DbContextOptions options) : base(options)
         {
@@ -131,6 +134,34 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
             builder.Entity<User>().Property(p => p.LastName).IsRequired().HasMaxLength(30);
             builder.Entity<User>().Property(p => p.Email).IsRequired().HasMaxLength(50);
             builder.Entity<User>().Property(p => p.Premium).IsRequired();
+            
+            //Tournaments
+            builder.Entity<Tournament>().ToTable("Tournaments");
+            builder.Entity<Tournament>().HasKey(p => p.Id);
+            builder.Entity<Tournament>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Tournament>().Property(p => p.PublicationId).IsRequired();
+            builder.Entity<Tournament>().HasMany(p => p.Participants).WithOne();
+            
+            builder.Entity<Tournament>().HasData
+            (
+                new Tournament {Id = 1, PublicationId = 1},
+                new Tournament {Id = 2, PublicationId = 2},
+                new Tournament {Id = 3, PublicationId = 3}
+            );
+            
+            //Participants
+            builder.Entity<Participant>().ToTable("Participants");
+            builder.Entity<Participant>().HasKey(p => p.Id);
+            builder.Entity<Participant>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Participant>().Property(p => p.TournamentId).IsRequired();
+            builder.Entity<Participant>().Property(p => p.UserId).IsRequired();
+            
+            builder.Entity<Participant>().HasData
+            (
+                new Participant {Id = 1, TournamentId = 1, Points = 12, UserId = 1},
+                new Participant {Id = 2, TournamentId = 1, Points = 24, UserId = 2},
+                new Participant {Id = 3, TournamentId = 2, Points = 2, UserId = 1}
+            );
 
             builder.UseSnakeCaseNamingConvention();
 

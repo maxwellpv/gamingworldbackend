@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
+using GamingWorld.API.Business.Domain.Repositories;
+using GamingWorld.API.Business.Domain.Services;
+using GamingWorld.API.Business.Persistence.Repositories;
+using GamingWorld.API.Business.Services;
 using GamingWorld.API.Profiles.Domain.Repositories;
 using GamingWorld.API.Profiles.Domain.Services;
 using GamingWorld.API.Profiles.Persistence.Repositories;
@@ -72,6 +76,12 @@ namespace GamingWorld.API
             
             services.AddScoped<IPublicationRepository, PublicationRepository>();
             services.AddScoped<IPublicationService, PublicationService>();
+            
+            services.AddScoped<ITournamentRepository, TournamentRepository>();
+            services.AddScoped<ITournamentService, TournamentService>();
+            
+            services.AddScoped<IParticipantRepository, ParticipantRepository>();
+            services.AddScoped<IParticipantService, ParticipantService>();
 
             services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IUProfileService, ProfileService>();

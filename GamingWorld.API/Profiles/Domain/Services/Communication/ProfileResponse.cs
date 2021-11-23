@@ -1,4 +1,5 @@
 ﻿using GamingWorld.API.Profiles.Domain.Models;
+using GamingWorld.API.Shared.Domain.Services.Communication;
 
 namespace GamingWorld.API.Profiles.Domain.Services.Communication
 {

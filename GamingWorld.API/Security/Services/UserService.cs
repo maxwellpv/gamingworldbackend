@@ -49,7 +49,7 @@ namespace GamingWorld.API.Security.Services
         public async Task RegisterAsync(RegisterRequest request)
         {
             //Validate
-            if (_userRepository.ExistsByUserName(request.Username))
+            if (_userRepository.ExistsByUsername(request.Username))
                 throw new AppException($"Username {request.Username} is already taken.");
             
             //Map request to User object

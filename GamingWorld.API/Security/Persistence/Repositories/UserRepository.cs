@@ -35,7 +35,7 @@ namespace GamingWorld.API.Security.Persistence.Repositories
             return await _context.Users.FirstOrDefaultAsync(p => p.Username == username);
         }
 
-        public bool ExistsByUserName(string username)
+        public bool ExistsByUsername(string username)
         {
             return _context.Users.Any(u => u.Username == username);
         }
