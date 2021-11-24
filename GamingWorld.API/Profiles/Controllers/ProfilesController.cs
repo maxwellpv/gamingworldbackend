@@ -34,7 +34,15 @@ namespace GamingWorld.API.Profiles.Controllers
         [HttpGet("{id}")]
         public async Task<ProfileResource> GetById(int id)
         {
-            var profile = await _uProfileService.ListByUserIdAsync(id);
+            var profile = await _uProfileService.ListByIdAsync(id);
+            var resources = _mapper.Map<Profile, ProfileResource>(profile);
+            return resources;
+        }
+        
+        [HttpGet("user/{userId}")]
+        public async Task<ProfileResource> GetByUserId(int userId)
+        {
+            var profile = await _uProfileService.ListByUserIdAsync(userId);
             var resources = _mapper.Map<Profile, ProfileResource>(profile);
             return resources;
         }

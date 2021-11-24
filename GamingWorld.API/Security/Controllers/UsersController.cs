@@ -48,6 +48,7 @@ namespace GamingWorld.API.Security.Controllers
             return resources;
         }
         
+        /*
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] SaveUserResource resource)
         {
@@ -63,7 +64,8 @@ namespace GamingWorld.API.Security.Controllers
             var productResource = _mapper.Map<Domain.Models.User, UserResource>(result.Resource);
             return Ok(productResource);
         }
-
+        */
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(int id, [FromBody] SaveUserResource resource)
         {
