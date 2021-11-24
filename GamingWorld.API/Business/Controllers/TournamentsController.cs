@@ -62,16 +62,16 @@ namespace GamingWorld.API.Business.Controllers
             return Ok(publicationResource);
         }
 
-        [HttpPost( "{tournamentId}/participants")]
+        [HttpPost( "{id}/participants")]
 
-        public async Task<IActionResult> PostParticipantAsync([FromBody] SaveParticipantResource resource, int tournamentId)
+        public async Task<IActionResult> PostParticipantAsync([FromBody] SaveParticipantResource resource, int id)
         {
 
             if (!ModelState.IsValid)
                  return BadRequest(ModelState.GetErrorMessages());
 
             var participant = _mapper.Map<SaveParticipantResource, Participant>(resource);
-            var result = await _participantService.SaveAsync(tournamentId, participant);
+            var result = await _participantService.SaveAsync(id, participant);
 
             if (!result.Success)
                 return BadRequest(result.Message);
@@ -79,13 +79,13 @@ namespace GamingWorld.API.Business.Controllers
             var participantResource = _mapper.Map<Participant, ParticipantResource>(result.Resource);
             return Ok(participantResource);
         }
-        [HttpPut("{tournamentId}/participants/{participantId}")]
-        public async Task<IActionResult> PutAsync(int tournamentId,int participantId, [FromQuery] int points)
+        [HttpPut("{id}/participants/{participantId}")]
+        public async Task<IActionResult> PutAsync(int id,int participantId, [FromQuery] int points)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
             
-            var result = await _tournamentService.UpdateParticipantPoints(tournamentId,participantId, points);
+            var result = await _tournamentService.UpdateParticipantPoints(id,participantId, points);
             
             if (!result.Success)
                 return BadRequest(result.Message);
@@ -95,13 +95,13 @@ namespace GamingWorld.API.Business.Controllers
 
         }
         
-        [HttpPut("{tournamentId}")]
-        public async Task<IActionResult> PutAsync([FromQuery] bool tournamentStatus, int tournamentId)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAsync([FromQuery] bool tournamentStatus, int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
             
-            var result = await _tournamentService.EndTournament(tournamentId, tournamentStatus);
+            var result = await _tournamentService.EndTournament(id, tournamentStatus);
             
             if (!result.Success)
                 return BadRequest(result.Message);
