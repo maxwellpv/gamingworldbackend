@@ -68,7 +68,7 @@ namespace GamingWorld.API.Business.Controllers
         {
 
             if (!ModelState.IsValid)
-                return BadRequest(ModelState.GetErrorMessages());
+                 return BadRequest(ModelState.GetErrorMessages());
 
             var participant = _mapper.Map<SaveParticipantResource, Participant>(resource);
             var result = await _participantService.SaveAsync(tournamentId, participant);

@@ -36,14 +36,20 @@ namespace GamingWorld.API.Business.Services
 
         public async Task<ParticipantResponse> SaveAsync(int tournamentId, Participant participant)
         {
-            var tournament = await _tournamentRepository.FindByIdAsync(tournamentId);
+            var tournament = await _tournamentRepository.ListWithParticipantsById(tournamentId);
             if(tournament==null)
                 return new ParticipantResponse("Tournament Not Found");
-            if (tournament.Participants.Count() < tournament.ParticipantLimit)
-                return new ParticipantResponse("This tournament is full.");
-            
+            if (tournament.Participants != null)
+            {
+                if (tournament.Participants.Count() >= tournament.ParticipantLimit)
+                    return new ParticipantResponse("This tournament is full.");
+                if (tournament.Participants.Any(x => x.UserId == participant.UserId))
+                    return new ParticipantResponse("This user already is a participant.");
+            }
+
             try
             {
+                participant.TournamentId = tournamentId;
                 await _participantRepository.AddAsync(participant);
                 await _unitOfWork.CompleteAsync();
 
@@ -55,6 +61,22 @@ namespace GamingWorld.API.Business.Services
             }
         }
 
+        public async Task<bool> ValidateParticipantTournament(int tournamentId, int participantId)
+        {
+            var tournament = await _tournamentRepository.ListWithParticipantsById(tournamentId);
+            var participant = await _participantRepository.FindByIdAsync(participantId);
+            if(tournament==null)
+                return true;
+            if (tournament.Participants != null)
+            {
+                if (tournament.Participants.Count() >= tournament.ParticipantLimit)
+                    return false;
+                if (tournament.Participants.Any(x => x.UserId == participant.UserId))
+                    return false;
+            }
+
+            return true;
+        }
         public async Task<ParticipantResponse> UpdateAsync(int id, Participant tournament)
         {
             var existingParticipant = GetById(id);

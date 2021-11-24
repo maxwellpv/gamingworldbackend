@@ -10,8 +10,6 @@ namespace GamingWorld.API.Business.Resources
         [Required]
         public int UserId { get; set; }
         
-        [Required]
-        public int TournamentId { get; set; }
         
         public int Points { get; set; }
 
