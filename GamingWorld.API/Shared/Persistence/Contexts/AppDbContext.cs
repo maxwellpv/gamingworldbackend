@@ -3,6 +3,7 @@ using GamingWorld.API.Profiles.Domain.Models;
 using GamingWorld.API.Publications.Domain.Models;
 using GamingWorld.API.Security.Domain.Models;
 using GamingWorld.API.Shared.Extensions;
+using GamingWorld.API.Shared.Inbound.ExternalAPIs.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GamingWorld.API.Shared.Persistence.Contexts
@@ -14,6 +15,7 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Tournament> Tournaments { get; set; } 
         public DbSet<Participant> Participants { get; set; } 
+        public DbSet<ExternalAPI> ExternalApis { get; set; }
 
         public AppDbContext(DbContextOptions options) : base(options)
         {
@@ -22,6 +24,15 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            
+            // External APIs
+
+            builder.Entity<ExternalAPI>().ToTable("ExternalApis");
+            builder.Entity<ExternalAPI>().HasKey(api => api.Id);
+            builder.Entity<ExternalAPI>().Property(api => api.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<ExternalAPI>().Property(api => api.Name).IsRequired();
+            builder.Entity<ExternalAPI>().Property(api => api.Expiration).IsRequired();
+            builder.Entity<ExternalAPI>().Property(api => api.Token).IsRequired();
 
             //Profiles
             builder.Entity<Profile>().ToTable("Profiles");

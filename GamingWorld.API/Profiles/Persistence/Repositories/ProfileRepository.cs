@@ -23,6 +23,7 @@ namespace GamingWorld.API.Profiles.Persistence.Repositories
                 .Include(up => up.StreamerSponsors)
                 .Include(up => up.TournamentExperiences)
                 .Include(up => up.FavoriteGames)
+                .Include(up => up.User)
                 .ToListAsync();
         }
 

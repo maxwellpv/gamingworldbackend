@@ -24,6 +24,12 @@ using GamingWorld.API.Security.Domain.Repositories;
 using GamingWorld.API.Security.Domain.Services;
 using GamingWorld.API.Security.Persistence.Repositories;
 using GamingWorld.API.Security.Services;
+using GamingWorld.API.Shared.Inbound.ExternalAPIs.Domain.Repositories;
+using GamingWorld.API.Shared.Inbound.ExternalAPIs.Persistence.Repositories;
+using GamingWorld.API.Shared.Inbound.Games.Domain.Services;
+using GamingWorld.API.Shared.Inbound.Games.Services;
+using GamingWorld.API.Shared.Inbound.News.Domain.Services;
+using GamingWorld.API.Shared.Inbound.News.Services;
 using GamingWorld.API.Shared.Persistence.Contexts;
 using GamingWorld.API.Shared.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -85,6 +91,12 @@ namespace GamingWorld.API
 
             services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IUProfileService, ProfileService>();
+
+            services.AddScoped<IExternalAPIRepository, ExternalAPIRepository>();
+            
+            services.AddScoped<IGamesService, GamesService>();
+
+            services.AddScoped<INewsService, NewsService>();
             
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             
