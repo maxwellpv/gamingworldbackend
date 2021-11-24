@@ -26,6 +26,8 @@ namespace GamingWorld.API.Shared.Inbound.Games.Services
         private readonly string TWITCH_GRANT_TYPE = "client_credentials";
 
         private readonly string IGDB_GAMES_ENDPOINT_URL = "https://api.igdb.com/v4/games";
+
+        private readonly string TWITCH_TOP_GAMES_ENDPOINT = "https://api.twitch.tv/helix/games/top";
         
         private readonly IExternalAPIRepository _externalApiRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -69,6 +71,31 @@ namespace GamingWorld.API.Shared.Inbound.Games.Services
             var response = await MakeIGDBRequest(body);
 
             return JsonSerializer.Deserialize<List<Game>>(response);
+        }
+
+        public async Task<string> FindTopGames(int limit)
+        {
+            ExternalAPI credentials = await GetIGDBCredentials();
+            
+            if (credentials.Token.IsNullOrEmpty())
+                throw new AppException("Internal token error.");
+            
+            using var client = new HttpClient();
+
+            client.DefaultRequestHeaders.Authorization =  new AuthenticationHeaderValue("Bearer", credentials.Token);
+            client.DefaultRequestHeaders.Add("Client-ID", TWITCH_CLIENT_ID);
+            
+            var builder = new UriBuilder(TWITCH_TOP_GAMES_ENDPOINT);
+            builder.Port = -1;
+            var query = HttpUtility.ParseQueryString(builder.Query);
+            query["first"] = limit.ToString();
+            builder.Query = query.ToString();
+            
+            string requestURL = builder.ToString();
+            
+            var response = await client.GetAsync(requestURL);
+
+            return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<ExternalAPI> GetIGDBCredentials()

@@ -32,10 +32,16 @@ namespace GamingWorld.API.Shared.Inbound.Games.Controllers
         }
         
         
-        [HttpGet("find/{name}")]
+        [HttpGet("find")]
         public async Task<IEnumerable<Game>> GetByNameAsync(string name, int limit)
         {
             return await _gamesService.FindByName(name, limit);
+        }
+        
+        [HttpGet("top")]
+        public async Task<string> GetTopGames(int limit)
+        {
+            return await _gamesService.FindTopGames(limit);
         }
     }
 }
