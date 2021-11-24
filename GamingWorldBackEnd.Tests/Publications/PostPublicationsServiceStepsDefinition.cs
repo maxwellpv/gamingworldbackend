@@ -14,7 +14,7 @@ using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using Xunit;
 
-namespace GamingWorldBackEnd.Tests
+namespace GamingWorldBackEnd.Tests.Publications
 {
     [Binding]
     public class PublicationServiceStepsDefinition
@@ -28,7 +28,7 @@ namespace GamingWorldBackEnd.Tests
             _factory = factory;
         }
 
-        [Given(@"the endpoint http://localhost:(.*)/api/v(.*)/publications is available")]
+        [Given(@"the endpoint https://localhost:(.*)/api/v(.*)/publications is available")]
         public void GivenTheEndpointHttpLocalhostApiVPublicationsIsAvailable(int port, int version)
         {
             _baseUri = new Uri($"https://localhost:{port}/api/v{version}/publications");

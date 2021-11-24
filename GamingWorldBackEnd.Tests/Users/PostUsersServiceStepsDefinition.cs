@@ -6,6 +6,7 @@ using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using GamingWorld.API;
+using GamingWorld.API.Security.Domain.Services.Communication;
 using GamingWorld.API.Security.Resources;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
@@ -14,7 +15,7 @@ using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using Xunit;
 
-namespace GamingWorldBackEnd.Tests
+namespace GamingWorldBackEnd.Tests.Users
 {
     [Binding]
     public class PostUsersServiceStepsDefinition
@@ -30,17 +31,17 @@ namespace GamingWorldBackEnd.Tests
             _factory = factory;
         }
         
-        [Given(@"the endpoint http://localhost:(.*)/api/v(.*)/users is available")]
+        [Given(@"the endpoint https://localhost:(.*)/api/v(.*)/users/auth/sign-up is available")]
         public void GivenTheEndpointHttpLocalhostApiVUsersIsAvailable(int port, int version)
         {
-            _baseUri = new Uri($"https://localhost:{port}/api/v{version}/users");
+            _baseUri = new Uri($"https://localhost:{port}/api/v{version}/users/auth/sign-up");
             _client = _factory.CreateClient(new WebApplicationFactoryClientOptions {BaseAddress = _baseUri});
         }
 
         [When(@"a POST Request is sent")]
         public void WhenApostRequestIsSent(Table saveUserResource)
         {
-            var resource = saveUserResource.CreateSet<SaveUserResource>().First();
+            var resource = saveUserResource.CreateSet<RegisterRequest>().First();
             var content = new StringContent(resource.ToJson(), Encoding.UTF8, MediaTypeNames.Application.Json);
             Response = _client.PostAsync(_baseUri, content);
         }

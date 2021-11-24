@@ -81,7 +81,7 @@ namespace GamingWorldBackEnd.Tests.Publications
 #line 6
  #line hidden
 #line 7
-  testRunner.Given("the endpoint http://localhost:5000/api/v1/publications is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+  testRunner.Given("the endpoint https://localhost:5001/api/v1/publications is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
         }
         
@@ -129,9 +129,9 @@ namespace GamingWorldBackEnd.Tests.Publications
                             "content",
                             "participantLimit",
                             "prizePool",
-                            "tDate",
-                            "tHour",
-                            "publicatedAt",
+                            "tournamentDate",
+                            "tournamentHour",
+                            "createdAt",
                             "gameId",
                             "userId"});
                 table1.AddRow(new string[] {
@@ -158,9 +158,9 @@ namespace GamingWorldBackEnd.Tests.Publications
                             "content",
                             "participantLimit",
                             "prizePool",
-                            "tDate",
-                            "tHour",
-                            "publicatedAt",
+                            "tournamentDate",
+                            "tournamentHour",
+                            "createdAt",
                             "gameId",
                             "userId"});
                 table2.AddRow(new string[] {

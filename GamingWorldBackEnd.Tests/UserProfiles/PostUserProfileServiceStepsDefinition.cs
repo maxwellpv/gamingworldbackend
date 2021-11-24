@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using GamingWorld.API;
 using GamingWorld.API.Profiles.Resources;
-using GamingWorld.API.Publications.Resources;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using SpecFlow.Internal.Json;
@@ -14,7 +13,7 @@ using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using Xunit;
 
-namespace GamingWorldBackEnd.Tests
+namespace GamingWorldBackEnd.Tests.UserProfiles
 {
     [Binding]
     public class PostUserProfileServiceStepsDefinition
@@ -28,10 +27,10 @@ namespace GamingWorldBackEnd.Tests
             _factory = factory;
         }
         
-        [Given(@"the endpoint http://localhost:(.*)/api/v(.*)/userprofiles is available")]
+        [Given(@"the endpoint https://localhost:(.*)/api/v(.*)/profiles is available")]
         public void GivenTheEndpointHttpLocalhostApiVUserprofilesIsAvailable(int port, int version)
         {
-            _baseUri = new Uri($"https://localhost:{port}/api/v{version}/userprofiles");
+            _baseUri = new Uri($"https://localhost:{port}/api/v{version}/profiles");
             _client = _factory.CreateClient(new WebApplicationFactoryClientOptions {BaseAddress = _baseUri});
         }
 
