@@ -36,7 +36,7 @@ namespace GamingWorld.API.Business.Persistence.Repositories
         
         public async Task<Tournament> ListWithParticipantsById(int id)
         {
-            return await _context.Tournaments.Include(t=> t.Participants).FirstOrDefaultAsync(t=>t.Id==id);
+            return await _context.Tournaments.Include(t=> t.Participants).ThenInclude(u=>u.User).FirstOrDefaultAsync(t=>t.Id==id);
         }
 
         public async Task<Tournament> FindByIdAsync(int id)

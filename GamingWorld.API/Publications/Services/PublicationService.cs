@@ -10,6 +10,7 @@ using GamingWorld.API.Publications.Domain.Repositories;
 using GamingWorld.API.Publications.Domain.Services;
 using GamingWorld.API.Publications.Domain.Services.Communication;
 using GamingWorld.API.Publications.Resources;
+using GamingWorld.API.Security.Exceptions;
 using IUnitOfWork = GamingWorld.API.Shared.Domain.Repositories.IUnitOfWork;
 
 namespace GamingWorld.API.Publications.Services
@@ -50,10 +51,14 @@ namespace GamingWorld.API.Publications.Services
 
         public async Task<PublicationResponse> SaveAsync(SavePublicationResource publicationResource)
         {
+            if (publicationResource.ParticipantLimit < 2)
+                return new PublicationResponse("Only tournaments with at least 2 participants allowed.");
+            
             var publication = _mapper.Map<SavePublicationResource, Publication>(publicationResource);
 
             try
             {
+
                 await _publicationRepository.AddAsync(publication);
                 await _unitOfWork.CompleteAsync();
 
