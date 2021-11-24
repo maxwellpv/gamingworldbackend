@@ -108,13 +108,11 @@ namespace GamingWorld.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GamingWorld.API v1"));
-            }
-            
+            // For this course purpose we allow Swagger in release mode.
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GamingWorld.API v1"));
+
             app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseMiddleware<JwtMiddleware>();
