@@ -4,19 +4,34 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
+using GamingWorld.API.Business.Domain.Repositories;
+using GamingWorld.API.Business.Domain.Services;
+using GamingWorld.API.Business.Persistence.Repositories;
+using GamingWorld.API.Business.Services;
+using GamingWorld.API.Profiles.Domain.Repositories;
+using GamingWorld.API.Profiles.Domain.Services;
+using GamingWorld.API.Profiles.Persistence.Repositories;
+using GamingWorld.API.Profiles.Services;
 using GamingWorld.API.Publications.Domain.Repositories;
 using GamingWorld.API.Publications.Domain.Services;
 using GamingWorld.API.Publications.Persistence.Repositories;
 using GamingWorld.API.Publications.Services;
-using GamingWorld.API.UserProfiles.Domain.Repositories;
-using GamingWorld.API.UserProfiles.Domain.Services;
-using GamingWorld.API.UserProfiles.Persistence.Context;
-using GamingWorld.API.UserProfiles.Persistence.Repositories;
-using GamingWorld.API.UserProfiles.Services;
-using GamingWorld.API.Users.Domain.Repositories;
-using GamingWorld.API.Users.Domain.Services;
-using GamingWorld.API.Users.Persistence.Repositories;
-using GamingWorld.API.Users.Services;
+using GamingWorld.API.Security.Authorization.Handlers.Implementations;
+using GamingWorld.API.Security.Authorization.Handlers.Interfaces;
+using GamingWorld.API.Security.Authorization.Middleware;
+using GamingWorld.API.Security.Authorization.Settings;
+using GamingWorld.API.Security.Domain.Repositories;
+using GamingWorld.API.Security.Domain.Services;
+using GamingWorld.API.Security.Persistence.Repositories;
+using GamingWorld.API.Security.Services;
+using GamingWorld.API.Shared.Inbound.ExternalAPIs.Domain.Repositories;
+using GamingWorld.API.Shared.Inbound.ExternalAPIs.Persistence.Repositories;
+using GamingWorld.API.Shared.Inbound.Games.Domain.Services;
+using GamingWorld.API.Shared.Inbound.Games.Services;
+using GamingWorld.API.Shared.Inbound.News.Domain.Services;
+using GamingWorld.API.Shared.Inbound.News.Services;
+using GamingWorld.API.Shared.Persistence.Contexts;
+using GamingWorld.API.Shared.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,8 +42,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using IUnitOfWork = GamingWorld.API.Users.Domain.Repositories.IUnitOfWork;
-using UnitOfWork = GamingWorld.API.UserProfiles.Persistence.Repositories.UnitOfWork;
+using IUnitOfWork = GamingWorld.API.Shared.Domain.Repositories.IUnitOfWork;
 
 namespace GamingWorld.API
 {
@@ -44,21 +58,10 @@ namespace GamingWorld.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers();
-
-                services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAllHeaders",
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                    });
-            });
-
-            services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
-
+            services.AddRouting(options => options.LowercaseUrls = true);
+            
             services.AddDbContext<AppDbContext>(options =>
             {
                 //options.UseInMemoryDatabase("supermarket-api-in-memory");
@@ -71,18 +74,35 @@ namespace GamingWorld.API
                 c.OperationFilter<SnakeCaseOperationFilter>();
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "GamingWorld.API", Version = "v1"});
             });
+
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             
             services.AddScoped<IPublicationRepository, PublicationRepository>();
             services.AddScoped<IPublicationService, PublicationService>();
+            
+            services.AddScoped<ITournamentRepository, TournamentRepository>();
+            services.AddScoped<ITournamentService, TournamentService>();
+            
+            services.AddScoped<IParticipantRepository, ParticipantRepository>();
+            services.AddScoped<IParticipantService, ParticipantService>();
 
-            services.AddScoped<IUserProfileRepository, UserProfileRepository>();
-            services.AddScoped<IUProfileService, UserProfileService>();
+            services.AddScoped<IProfileRepository, ProfileRepository>();
+            services.AddScoped<IUProfileService, ProfileService>();
+
+            services.AddScoped<IExternalAPIRepository, ExternalAPIRepository>();
+            
+            services.AddScoped<IGamesService, GamesService>();
+
+            services.AddScoped<INewsService, NewsService>();
             
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddAutoMapper(typeof(Startup));
+            
+            services.AddScoped<IJwtHandler, JwtHandler>();
+            
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,8 +114,15 @@ namespace GamingWorld.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GamingWorld.API v1"));
             }
+            
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
-            app.UseCors("AllowAllHeaders");
+            app.UseMiddleware<JwtMiddleware>();
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
