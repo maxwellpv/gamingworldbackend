@@ -1,4 +1,4 @@
-﻿namespace GamingWorld.API.Profiles.Domain.Services.Communication
+﻿namespace GamingWorld.API.Shared.Domain.Services.Communication
 {
     public class BaseResponse<T>
     {

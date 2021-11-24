@@ -1,4 +1,6 @@
-﻿namespace GamingWorld.API.Publications.Domain.Models
+﻿using GamingWorld.API.Business.Domain.Models;
+
+namespace GamingWorld.API.Publications.Domain.Models
 {
     public class Publication
     {
@@ -10,19 +12,16 @@
              
         public string Content { get; set; }
              
-        public int ParticipantLimit { get; set; }
-             
-        public int PrizePool { get; set; }
+
         
         public string UrlToImage { get; set; }
+        
+        public int? TournamentId { get; set; }
+        
+        public Tournament Tournament { get; set; }
+
+        public string CreatedAt { get; set; }
              
-        public string TDate { get; set; }
-             
-        public string THour { get; set; }
-             
-        public string PublicatedAt { get; set; }
-             
-        //Faltaria el de almacenar imagen en la BDD
              
         //Relationships
         public int GameId { get; set; }

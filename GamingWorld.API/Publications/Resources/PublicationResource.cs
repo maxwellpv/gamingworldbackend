@@ -1,4 +1,6 @@
-﻿namespace GamingWorld.API.Publications.Resources
+﻿using GamingWorld.API.Business.Resources;
+
+namespace GamingWorld.API.Publications.Resources
 {
     public class PublicationResource
     {
@@ -10,19 +12,23 @@
              
         public string Content { get; set; }
              
-        public int ParticipantLimit { get; set; }
+        /*public int ParticipantLimit { get; set; }*/
              
-        public int PrizePool { get; set; }
+        /*public int PrizePool { get; set; }
              
-        public string TDate { get; set; }
+        public int TournamentId { get; set; }
              
-        public string THour { get; set; }
+        public string TournamentDate { get; set; }
+             
+        public string TournamentHour { get; set; }*/
         
         public string UrlToImage { get; set; }
              
-        public string PublicatedAt { get; set; }
-             
-        //Faltaria el de almacenar imagen en la BDD
+        public string CreatedAt { get; set; }
+        
+        /*public int TournamentId { get; set; }*/
+        
+        public TournamentResource Tournament { get; set; }
              
         //Relationships
         public int GameId { get; set; }

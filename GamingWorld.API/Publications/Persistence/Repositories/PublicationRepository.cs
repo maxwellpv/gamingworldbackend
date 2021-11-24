@@ -17,12 +17,12 @@ namespace GamingWorld.API.Publications.Persistence.Repositories
 
         public async Task<IEnumerable<Publication>> ListAsync()
         {
-            return await _context.Publications.ToListAsync();
+            return await _context.Publications.Include(p=>p.Tournament).ToListAsync();
         }
 
         public async Task<IEnumerable<Publication>> ListByTypeAsync()
         {
-            return await _context.Publications.ToListAsync();
+            return await _context.Publications.Include(p=>p.Tournament).ToListAsync();
         }
 
         public async Task AddAsync(Publication publication)
@@ -32,7 +32,7 @@ namespace GamingWorld.API.Publications.Persistence.Repositories
 
         public async Task<Publication> FindByIdAsync(int id)
         {
-            return await _context.Publications.FindAsync(id);
+            return await _context.Publications.Include(p=>p.Tournament).FirstOrDefaultAsync(p=>p.Id==id);
         }
 
         public void Update(Publication publication)
