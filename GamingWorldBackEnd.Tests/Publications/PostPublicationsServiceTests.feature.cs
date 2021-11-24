@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace GamingWorldBackEnd.Tests
+namespace GamingWorldBackEnd.Tests.Publications
 {
     using TechTalk.SpecFlow;
     using System;
@@ -40,7 +40,7 @@ namespace GamingWorldBackEnd.Tests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "PostPublicationsServiceTest", "As a developer\r\nI want to create a new publication through an API\r\nSo that i dont" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Publications", "PostPublicationsServiceTest", "As a developer\r\nI want to create a new publication through an API\r\nSo that i dont" +
                     " have to manually create one in the database.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }

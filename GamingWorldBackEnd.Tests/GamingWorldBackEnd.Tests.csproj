@@ -27,4 +27,19 @@
       <ProjectReference Include="..\GamingWorld.API\GamingWorld.API.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Publications\PostPublicationsServiceTests.feature.cs">
+        <DependentUpon>PostPublicationsServiceTests.feature</DependentUpon>
+        <AutoGen>true</AutoGen>
+        <DesignTime>true</DesignTime>
+        <Visible>true</Visible>
+      </Compile>
+      <Compile Update="Users\PostUsersServiceTests.feature.cs">
+        <DependentUpon>PostUsersServiceTests.feature</DependentUpon>
+        <AutoGen>true</AutoGen>
+        <DesignTime>true</DesignTime>
+        <Visible>true</Visible>
+      </Compile>
+    </ItemGroup>
+
 </Project>

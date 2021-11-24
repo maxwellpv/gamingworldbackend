@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace GamingWorldBackEnd.Tests
+namespace GamingWorldBackEnd.Tests.UserProfiles
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,7 +19,7 @@ namespace GamingWorldBackEnd.Tests
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class PostUsersServiceTestFeature : object, Xunit.IClassFixture<PostUsersServiceTestFeature.FixtureData>, System.IDisposable
+    public partial class PostUserProfilesServiceTestFeature : object, Xunit.IClassFixture<PostUserProfilesServiceTestFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace GamingWorldBackEnd.Tests
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "PostUsersServiceTests.feature"
+#line 1 "PostUserProfileServiceTests.feature"
 #line hidden
         
-        public PostUsersServiceTestFeature(PostUsersServiceTestFeature.FixtureData fixtureData, GamingWorldBackEnd_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public PostUserProfilesServiceTestFeature(PostUserProfilesServiceTestFeature.FixtureData fixtureData, GamingWorldBackEnd_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,8 +40,8 @@ namespace GamingWorldBackEnd.Tests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "PostUsersServiceTest", "As a developer\r\nI want to create a new user through an API\r\nSo that i dont have t" +
-                    "o manually create one in the database.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "UserProfiles", "PostUserProfilesServiceTest", "As a developer\r\nI want to post a user profile through an API\r\nSo that i dont have" +
+                    " to manually create one in the database.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -81,7 +81,7 @@ namespace GamingWorldBackEnd.Tests
 #line 7
 #line hidden
 #line 9
-testRunner.Given("the endpoint http://localhost:5000/api/v1/users is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+testRunner.Given("the endpoint http://localhost:5000/api/v1/userprofiles is available", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
         }
         
@@ -90,16 +90,16 @@ testRunner.Given("the endpoint http://localhost:5000/api/v1/users is available",
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Create User")]
-        [Xunit.TraitAttribute("FeatureTitle", "PostUsersServiceTest")]
-        [Xunit.TraitAttribute("Description", "Create User")]
-        [Xunit.TraitAttribute("Category", "User_Creation")]
-        public virtual void CreateUser()
+        [Xunit.SkippableFactAttribute(DisplayName="Create Profile")]
+        [Xunit.TraitAttribute("FeatureTitle", "PostUserProfilesServiceTest")]
+        [Xunit.TraitAttribute("Description", "Create Profile")]
+        [Xunit.TraitAttribute("Category", "Profile_Creation")]
+        public virtual void CreateProfile()
         {
             string[] tagsOfScenario = new string[] {
-                    "User_Creation"};
+                    "Profile_Creation"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create User", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create Profile", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -124,35 +124,51 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                            "username",
-                            "email",
-                            "password",
-                            "premium"});
+                            "userId",
+                            "gamingLevel",
+                            "isStreamer",
+                            "gameExperiences",
+                            "streamingCategories",
+                            "streamerSponsors",
+                            "tournamentExperiences",
+                            "favoriteGames"});
                 table3.AddRow(new string[] {
-                            "Firechocolate",
-                            "ricardito12@gmail.com",
-                            "patatacaliente123",
-                            "false"});
+                            "1",
+                            "medium",
+                            "false",
+                            "Array",
+                            "Array",
+                            "Array",
+                            "Array",
+                            "Array"});
 #line 13
-testRunner.When("a POST Request is sent", ((string)(null)), table3, "When ");
+testRunner.When("a POST Request is sent with this body", ((string)(null)), table3, "When ");
 #line hidden
 #line 17
-testRunner.Then("a Response With Status 200 is received", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+testRunner.Then("a Response with Status 200 is received", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "id",
-                            "username",
-                            "email",
-                            "password",
-                            "premium"});
+                            "userId",
+                            "gamingLevel",
+                            "isStreamer",
+                            "gameExperiences",
+                            "streamingCategories",
+                            "streamerSponsors",
+                            "tournamentExperiences",
+                            "favoriteGames"});
                 table4.AddRow(new string[] {
                             "1",
-                            "Firechocolate",
-                            "ricardito12@gmail.com",
-                            "patatacaliente123",
-                            "false"});
+                            "1",
+                            "medium",
+                            "false",
+                            "Array",
+                            "Array",
+                            "Array",
+                            "Array",
+                            "Array"});
 #line 18
-testRunner.And("a User Resource is included in the response body.", ((string)(null)), table4, "And ");
+testRunner.And("a UserProfile resource is included in the response body.", ((string)(null)), table4, "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -165,12 +181,12 @@ testRunner.And("a User Resource is included in the response body.", ((string)(nu
             
             public FixtureData()
             {
-                PostUsersServiceTestFeature.FeatureSetup();
+                PostUserProfilesServiceTestFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                PostUsersServiceTestFeature.FeatureTearDown();
+                PostUserProfilesServiceTestFeature.FeatureTearDown();
             }
         }
     }
