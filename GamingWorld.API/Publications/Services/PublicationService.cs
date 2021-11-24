@@ -51,9 +51,6 @@ namespace GamingWorld.API.Publications.Services
 
         public async Task<PublicationResponse> SaveAsync(SavePublicationResource publicationResource)
         {
-            if (publicationResource.ParticipantLimit < 2)
-                return new PublicationResponse("Only tournaments with at least 2 participants allowed.");
-            
             var publication = _mapper.Map<SavePublicationResource, Publication>(publicationResource);
 
             try
