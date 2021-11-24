@@ -74,6 +74,7 @@ namespace GamingWorld.API.Profiles.Services
             existingProfile.FavoriteGames = profile.FavoriteGames;
             existingProfile.StreamingCategories = profile.StreamingCategories;
             existingProfile.TournamentExperiences = profile.TournamentExperiences;
+            existingProfile.StreamerSponsors = profile.StreamerSponsors;
 
             try
             {

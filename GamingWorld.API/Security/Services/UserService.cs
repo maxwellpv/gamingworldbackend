@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using GamingWorld.API.Profiles.Domain.Models;
+using GamingWorld.API.Profiles.Domain.Repositories;
 using GamingWorld.API.Security.Authorization.Handlers.Interfaces;
 using GamingWorld.API.Security.Domain.Models;
 using GamingWorld.API.Security.Domain.Repositories;
@@ -11,19 +13,22 @@ using GamingWorld.API.Security.Exceptions;
 using GamingWorld.API.Shared.Domain.Repositories;
 using GamingWorld.API.Shared.Extensions;
 using BCryptNet = BCrypt.Net.BCrypt;
+using Profile = GamingWorld.API.Profiles.Domain.Models.Profile;
 
 namespace GamingWorld.API.Security.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IProfileRepository _profileRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IJwtHandler _jwtHandler;
         private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper, IJwtHandler jwtHandler)
+        public UserService(IUserRepository userRepository, IProfileRepository profileRepository, IUnitOfWork unitOfWork, IMapper mapper, IJwtHandler jwtHandler)
         {
             _userRepository = userRepository;
+            _profileRepository = profileRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _jwtHandler = jwtHandler;
@@ -63,6 +68,14 @@ namespace GamingWorld.API.Security.Services
             try
             {
                 await _userRepository.AddAsync(user);
+                await _unitOfWork.CompleteAsync();
+
+                var profile = new Profile();
+                profile.UserId = user.Id;
+                profile.GamingLevel = EGamingLevel.Newbie;
+                profile.IsStreamer = true;
+
+                await _profileRepository.AddAsync(profile);
                 await _unitOfWork.CompleteAsync();
             }
             catch (Exception e)
