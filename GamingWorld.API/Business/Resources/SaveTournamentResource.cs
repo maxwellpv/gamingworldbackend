@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace GamingWorld.API.Business.Resources
 {
@@ -20,6 +21,7 @@ namespace GamingWorld.API.Business.Resources
         
         [Required]
         public string TournamentHour { get; set; }
+        
 
     }
 }

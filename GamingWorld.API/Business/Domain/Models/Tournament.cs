@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GamingWorld.API.Profiles.Domain.Models;
 using GamingWorld.API.Publications.Domain.Models;
@@ -21,6 +22,8 @@ namespace GamingWorld.API.Business.Domain.Models
         public Publication Publication { get; set; }
         public string TournamentHour { get; set; }
         public IEnumerable<Participant> Participants { get; set; }
+        
+        public bool TournamentStatus { get; set; }
         
 
     }

@@ -128,8 +128,20 @@ namespace GamingWorld.API.Business.Services
         {
             var tournament = await _tournamentRepository.FindByIdAsync(id);
             await _unitOfWork.CompleteAsync();
-            if (tournament == null) throw new KeyNotFoundException("User not found.");
+            if (tournament == null) throw new KeyNotFoundException("Tournament not found.");
             return tournament;
+        }
+
+        public async Task<TournamentResponse> EndTournament(int id, bool status)
+        {
+            var tournament = await _tournamentRepository.FindByIdAsync(id);
+            await _unitOfWork.CompleteAsync();
+            if (tournament == null) throw new KeyNotFoundException("Tournament not found.");
+            tournament.TournamentStatus = status;
+            _tournamentRepository.Update(tournament);
+            await _unitOfWork.CompleteAsync();
+            return new TournamentResponse(tournament);
+            
         }
         
     }

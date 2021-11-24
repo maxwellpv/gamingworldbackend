@@ -16,6 +16,7 @@ namespace GamingWorld.API.Business.Domain.Services
         Task<TournamentResponse> UpdateAsync(int id, Tournament tournament);
         Task<TournamentResponse> DeleteAsync(int id);
         Task<ParticipantResponse> UpdateParticipantPoints(int tournamentId, int participantId, int points);
+        Task<TournamentResponse> EndTournament(int tournamentId, bool tournamentStatus);
         
     }
 }

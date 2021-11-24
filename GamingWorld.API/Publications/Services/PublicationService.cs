@@ -64,6 +64,7 @@ namespace GamingWorld.API.Publications.Services
                     tournament.TournamentDate = publicationResource.TournamentDate;
                     tournament.TournamentHour = publicationResource.TournamentHour;
                     tournament.PrizePool = publicationResource.PrizePool;
+                    tournament.TournamentStatus = true;
                     tournament.Publication = publication;
                     await _tournamentRepository.AddAsync(tournament);
                     await _unitOfWork.CompleteAsync();

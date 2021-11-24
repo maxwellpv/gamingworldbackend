@@ -94,5 +94,21 @@ namespace GamingWorld.API.Business.Controllers
             return Ok(profileResource);
 
         }
+        
+        [HttpPut("{tournamentId}")]
+        public async Task<IActionResult> PutAsync([FromQuery] bool tournamentStatus, int tournamentId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+            
+            var result = await _tournamentService.EndTournament(tournamentId, tournamentStatus);
+            
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var tournamentResource = _mapper.Map<Tournament, TournamentResource>(result.Resource);
+            return Ok(tournamentResource);
+
+        }
     }
 }

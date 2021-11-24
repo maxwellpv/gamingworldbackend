@@ -22,7 +22,6 @@ namespace GamingWorld.API.Publications.Domain.Models
 
         public string CreatedAt { get; set; }
              
-        //Faltaria el de almacenar imagen en la BDD
              
         //Relationships
         public int GameId { get; set; }
