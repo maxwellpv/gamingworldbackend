@@ -9,7 +9,6 @@ namespace GamingWorld.API.Business.Domain.Services
     public interface IParticipantService
     {
         Task<IEnumerable<Participant>> ListAsync();
-        Task<Participant> ListByUserIdAsync(int userId);
         Task<ParticipantResponse> SaveAsync(int tournamentId, Participant participant);
         Task<ParticipantResponse> UpdateAsync(int id, Participant participant);
         Task<ParticipantResponse> DeleteAsync(int id);
