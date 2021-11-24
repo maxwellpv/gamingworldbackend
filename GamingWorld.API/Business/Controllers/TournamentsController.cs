@@ -33,12 +33,19 @@ namespace GamingWorld.API.Business.Controllers
                 var resources = _mapper.Map<IEnumerable<Tournament>, IEnumerable<TournamentResource>>(publications);
                 return resources;
         }
-        [HttpGet("{id}/participants")]
-        public async Task<Tournament> GetAllParticipantsByTournamentIdAsync(int id)
+        [HttpGet("{id}")]
+        public async Task<TournamentResource> GetByIdAsync(int id)
         {
-            var participants = await _tournamentService.ListWithParticipantsByIdAsync(id);
-            //var resources = _mapper.Map<IEnumerable<Tournament>, IEnumerable<TournamentResource>>(publications);
-            return participants;
+            var tournament =  await _tournamentService.GetById(id);
+            var resource = _mapper.Map<Tournament, TournamentResource>(tournament);
+            return resource;
+        }
+        [HttpGet("{id}/participants")]
+        public async Task<IEnumerable<ParticipantResource>> GetAllParticipantsByTournamentIdAsync(int id)
+        {
+            var tournament =  await _tournamentService.ListWithParticipantsByIdAsync(id);
+            var resources = _mapper.Map<IEnumerable<Participant>, IEnumerable<ParticipantResource>>(tournament.Participants);
+            return resources;
         }
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] SaveTournamentResource resource)
@@ -55,22 +62,37 @@ namespace GamingWorld.API.Business.Controllers
             return Ok(publicationResource);
         }
 
-        [HttpPost( "{id}/participants")]
+        [HttpPost( "{tournamentId}/participants")]
 
-        public async Task<IActionResult> PostParticipantAsync([FromBody] Participant resource)
+        public async Task<IActionResult> PostParticipantAsync([FromBody] SaveParticipantResource resource, int tournamentId)
         {
-            /*if (!ModelState.IsValid)
+
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
-            var publication = _mapper.Map<SaveTournamentResource, Tournament>(resource);*/
-            
-            var result = await _participantService.SaveAsync(resource);
-            return Ok(resource);
+            var participant = _mapper.Map<SaveParticipantResource, Participant>(resource);
+            var result = await _participantService.SaveAsync(tournamentId, participant);
 
-            /*if (!result.Success)
+            if (!result.Success)
                 return BadRequest(result.Message);
-            var publicationResource = _mapper.Map<Tournament, SaveTournamentResource>(result.Resource);
-            return Ok(publicationResource);*/
+
+            var participantResource = _mapper.Map<Participant, ParticipantResource>(result.Resource);
+            return Ok(participantResource);
+        }
+        [HttpPut("{tournamentId}/participants/{participantId}")]
+        public async Task<IActionResult> PutAsync(int tournamentId,int participantId, [FromQuery] int points)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+            
+            var result = await _tournamentService.UpdateParticipantPoints(tournamentId,participantId, points);
+            
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var profileResource = _mapper.Map<Participant, ParticipantResource>(result.Resource);
+            return Ok(profileResource);
+
         }
     }
 }

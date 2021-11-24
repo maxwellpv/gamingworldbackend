@@ -6,11 +6,12 @@ using GamingWorld.API.Publications.Resources;
 
 namespace GamingWorld.API.Business.Mapping
 {
-    public class ResourceToModelProfile : Profile
+    public class ResourceToModelProfile : AutoMapper.Profile
     {
         public ResourceToModelProfile()
         {
             CreateMap<SaveTournamentResource, Tournament>();
+            CreateMap<SaveParticipantResource, Participant>();
         }
     }
 }

@@ -8,6 +8,18 @@ namespace GamingWorld.API.Business.Resources
         //Relationships
         [Required]
         public int PublicationId { get; set; }
+        
+        [Required]
+        public int ParticipantLimit { get; set; }
+        
+        [Required]
+        public int PrizePool { get; set; }
+        
+        [Required]
+        public string TournamentDate { get; set; }
+        
+        [Required]
+        public string TournamentHour { get; set; }
 
     }
 }

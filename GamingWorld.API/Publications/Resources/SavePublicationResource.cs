@@ -14,14 +14,14 @@ namespace GamingWorld.API.Publications.Resources
         public int ParticipantLimit { get; set; }
              
         public int PrizePool { get; set; }
+
+        public string TournamentDate { get; set; }
              
-        public string TDate { get; set; }
-             
-        public string THour { get; set; }
+        public string TournamentHour { get; set; }
         
         public string UrlToImage { get; set; }
              
-        [Required] public string PublicatedAt { get; set; }
+        [Required] public string CreatedAt { get; set; }
         
         public int GameId { get; set; }
              

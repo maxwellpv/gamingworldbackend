@@ -6,6 +6,7 @@ using GamingWorld.API.Business.Domain.Models;
 using GamingWorld.API.Business.Domain.Repositories;
 using GamingWorld.API.Business.Domain.Services;
 using GamingWorld.API.Business.Domain.Services.Communication;
+using GamingWorld.API.Business.Resources;
 using GamingWorld.API.Security.Exceptions;
 using GamingWorld.API.Shared.Domain.Repositories;
 
@@ -15,14 +16,16 @@ namespace GamingWorld.API.Business.Services
     {
         
         private readonly ITournamentRepository _tournamentRepository;
+        private readonly IParticipantRepository _participantRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public TournamentService(IMapper mapper, ITournamentRepository tournamentRepository, IUnitOfWork unitOfWork)
+        public TournamentService(IMapper mapper, ITournamentRepository tournamentRepository, IUnitOfWork unitOfWork, IParticipantRepository participantRepository)
         {
             _mapper = mapper;
             _tournamentRepository = tournamentRepository;
             _unitOfWork = unitOfWork;
+            _participantRepository = participantRepository;
         }
 
         public async Task<IEnumerable<Tournament>> ListAsync()
@@ -57,12 +60,38 @@ namespace GamingWorld.API.Business.Services
             return await _tournamentRepository.ListWithParticipantsById(tournamentId);
         }
 
+        public async Task<ParticipantResponse> UpdateParticipantPoints(int tournamentId, int participantId, int points)
+        {
+            var existingTournament = await _tournamentRepository.FindByIdAsync(tournamentId);
+            if (existingTournament == null)
+                return new ParticipantResponse("Tournament Not Found");
+            
+            var existingParticipant = await _participantRepository.FindByIdAsync(participantId);
+            if (existingParticipant == null)
+                return new ParticipantResponse("Participant Not Found");
+            
+            if (points < 0)
+                return new ParticipantResponse("Points must be positive.");
+            
+            try
+            {
+                existingParticipant.Points = points;
+                _participantRepository.Update(existingParticipant);
+                await _unitOfWork.CompleteAsync();
+                return new ParticipantResponse(existingParticipant);
+            }
+            catch (Exception e)
+            {
+                return new ParticipantResponse($"An error occurred while updating the participant.");
+            }
+        }
+
         public async Task<TournamentResponse> UpdateAsync(int id, Tournament tournament)
         {
             var existingTournament = await _tournamentRepository.FindByIdAsync(id);
             if (existingTournament == null)
                 return new TournamentResponse("Tournament Not Found");
-            existingTournament.PublicationId = tournament.PublicationId;
+            existingTournament.Id = tournament.Id;
             
             try
             {
@@ -78,7 +107,7 @@ namespace GamingWorld.API.Business.Services
 
         public async Task<TournamentResponse> DeleteAsync(int id)
         {
-            var existingTournament =  GetById(id);
+            var existingTournament =  await GetById(id);
 
             if (existingTournament == null)
                 return new TournamentResponse("Tournament not found");
@@ -95,11 +124,12 @@ namespace GamingWorld.API.Business.Services
             }
         }
         
-        private Tournament GetById(int id)
+        public async Task<Tournament> GetById(int id)
         {
-            var user = _tournamentRepository.FindById(id);
-            if (user == null) throw new KeyNotFoundException("User not found.");
-            return user;
+            var tournament = await _tournamentRepository.FindByIdAsync(id);
+            await _unitOfWork.CompleteAsync();
+            if (tournament == null) throw new KeyNotFoundException("User not found.");
+            return tournament;
         }
         
     }

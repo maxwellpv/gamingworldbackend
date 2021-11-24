@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using GamingWorld.API.Publications.Domain.Models;
 using GamingWorld.API.Publications.Domain.Services.Communication;
+using GamingWorld.API.Publications.Resources;
 
 namespace GamingWorld.API.Publications.Domain.Services
 {
@@ -13,7 +14,7 @@ namespace GamingWorld.API.Publications.Domain.Services
         
         Task<Publication> GetById(int id);
 
-        Task<PublicationResponse> SaveAsync(Publication publication);
+        Task<PublicationResponse> SaveAsync(SavePublicationResource publication);
 
         Task<PublicationResponse> UpdateAsync(int id, Publication publication);
 

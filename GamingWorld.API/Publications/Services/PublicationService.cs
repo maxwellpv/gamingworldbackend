@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using GamingWorld.API.Business.Domain.Models;
+using GamingWorld.API.Business.Domain.Repositories;
 using GamingWorld.API.Publications.Domain.Models;
 using GamingWorld.API.Publications.Domain.Repositories;
 using GamingWorld.API.Publications.Domain.Services;
 using GamingWorld.API.Publications.Domain.Services.Communication;
+using GamingWorld.API.Publications.Resources;
 using IUnitOfWork = GamingWorld.API.Shared.Domain.Repositories.IUnitOfWork;
 
 namespace GamingWorld.API.Publications.Services
@@ -13,12 +17,16 @@ namespace GamingWorld.API.Publications.Services
     public class PublicationService : IPublicationService
     {
         private readonly IPublicationRepository _publicationRepository;
+        private readonly ITournamentRepository _tournamentRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public PublicationService(IPublicationRepository publicationRepository, IUnitOfWork unitOfWork)
+        public PublicationService(IPublicationRepository publicationRepository,ITournamentRepository tournamentRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
+            _tournamentRepository = tournamentRepository;
             _publicationRepository = publicationRepository;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<Publication>> ListAsync()
@@ -40,11 +48,30 @@ namespace GamingWorld.API.Publications.Services
             return await _publicationRepository.FindByIdAsync(id);
         }
 
-        public async Task<PublicationResponse> SaveAsync(Publication publication)
+        public async Task<PublicationResponse> SaveAsync(SavePublicationResource publicationResource)
         {
+            var publication = _mapper.Map<SavePublicationResource, Publication>(publicationResource);
+
             try
             {
                 await _publicationRepository.AddAsync(publication);
+                await _unitOfWork.CompleteAsync();
+
+                if (publication.PublicationType == 3)
+                {
+                    Tournament tournament = new Tournament();
+                    tournament.ParticipantLimit = publicationResource.ParticipantLimit;
+                    tournament.TournamentDate = publicationResource.TournamentDate;
+                    tournament.TournamentHour = publicationResource.TournamentHour;
+                    tournament.PrizePool = publicationResource.PrizePool;
+                    tournament.Publication = publication;
+                    await _tournamentRepository.AddAsync(tournament);
+                    await _unitOfWork.CompleteAsync();
+                    publication.TournamentId = tournament.Id;
+                    publication.Tournament = tournament;
+                }
+
+                _publicationRepository.Update(publication);
                 await _unitOfWork.CompleteAsync();
 
                 return new PublicationResponse(publication);

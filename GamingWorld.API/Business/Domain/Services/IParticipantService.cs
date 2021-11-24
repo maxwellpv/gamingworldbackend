@@ -10,8 +10,8 @@ namespace GamingWorld.API.Business.Domain.Services
     {
         Task<IEnumerable<Participant>> ListAsync();
         Task<Participant> ListByUserIdAsync(int userId);
-        Task<ParticipantResponse> SaveAsync(Participant tournament);
-        Task<ParticipantResponse> UpdateAsync(int id, Participant tournament);
+        Task<ParticipantResponse> SaveAsync(int tournamentId, Participant participant);
+        Task<ParticipantResponse> UpdateAsync(int id, Participant participant);
         Task<ParticipantResponse> DeleteAsync(int id);
     }
 }

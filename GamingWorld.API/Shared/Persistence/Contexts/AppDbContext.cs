@@ -34,13 +34,13 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
             builder.Entity<Profile>().HasMany(p => p.StreamingCategories).WithOne();
             builder.Entity<Profile>().HasMany(p => p.StreamerSponsors).WithOne();
 
-            builder.Entity<Profile>().HasData
+            /*builder.Entity<Profile>().HasData
             (
                 new Profile {Id = 1, UserId = 1, GamingLevel = EGamingLevel.A, IsStreamer = true},
                 new Profile {Id = 2, UserId = 2, GamingLevel = EGamingLevel.N, IsStreamer = true},
                 new Profile {Id = 3, UserId = 3, GamingLevel = EGamingLevel.M, IsStreamer = false},
                 new Profile {Id = 4, UserId = 4, GamingLevel = EGamingLevel.A, IsStreamer = false}
-            );
+            );*/
 
             // Profiles: GameExperiences
             builder.Entity<GameExperience>().ToTable("GameExperiences");
@@ -49,7 +49,7 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
             builder.Entity<GameExperience>().Property(ge => ge.GameName).IsRequired();
             builder.Entity<GameExperience>().Property(ge => ge.Time).IsRequired();
             builder.Entity<GameExperience>().Property(ge => ge.TimeUnit).IsRequired();
-            builder.Entity<GameExperience>().HasData
+            /*builder.Entity<GameExperience>().HasData
             (
                 new GameExperience
                     {Id = 1, GameName = "Among Us", Time = 5, TimeUnit = EGameExperienceTime.M, ProfileId = 1},
@@ -57,7 +57,7 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
                     {Id = 2, GameName = "Call of Duty", Time = 4, TimeUnit = EGameExperienceTime.Y, ProfileId = 2},
                 new GameExperience
                     {Id = 3, GameName = "Manco's Combat", Time = 25, TimeUnit = EGameExperienceTime.D, ProfileId = 3}
-            );
+            );*/
 
             // Profiles: StreamingCategories
             builder.Entity<StreamingCategory>().ToTable("StreamingCategories");
@@ -65,12 +65,12 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
             builder.Entity<StreamingCategory>().Property(sc => sc.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<StreamingCategory>().Property(sc => sc.Name).IsRequired();
 
-            builder.Entity<StreamingCategory>().HasData
+            /*builder.Entity<StreamingCategory>().HasData
             (
                 new StreamingCategory {Id = 1, Name = "Battle Royale", ProfileId = 1},
                 new StreamingCategory {Id = 2, Name = "First Person Shooter", ProfileId = 2},
                 new StreamingCategory {Id = 3, Name = "Battle Royale", ProfileId = 3}
-            );
+            );*/
 
             // Profiles: StreamerSponsors
             builder.Entity<StreamerSponsor>().ToTable("StreamerSponsors");
@@ -78,12 +78,12 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
             builder.Entity<StreamerSponsor>().Property(ss => ss.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<StreamerSponsor>().Property(ss => ss.Name).IsRequired();
 
-            builder.Entity<StreamerSponsor>().HasData
+            /*builder.Entity<StreamerSponsor>().HasData
             (
                 new StreamerSponsor {Id = 1, Name = "Coca Cola", ProfileId = 1},
                 new StreamerSponsor {Id = 2, Name = "Pepsi", ProfileId = 2},
                 new StreamerSponsor {Id = 3, Name = "Fanta", ProfileId = 3}
-            );
+            );*/
 
             // Profiles: TournamentExperiences
             builder.Entity<TournamentExperience>().ToTable("TournamentExperiences");
@@ -93,12 +93,12 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
             builder.Entity<TournamentExperience>().Property(te => te.Position).IsRequired();
             builder.Entity<TournamentExperience>().Property(te => te.ProfileId).IsRequired();
 
-            builder.Entity<TournamentExperience>().HasData
+            /*builder.Entity<TournamentExperience>().HasData
             (
                 new TournamentExperience {Id = 1, Name = "Noobs Tournament", Position = 23, ProfileId = 1},
                 new TournamentExperience {Id = 2, Name = "PUBG Championship", Position = 1, ProfileId = 2},
                 new TournamentExperience {Id = 3, Name = "CODM Championship", Position = 7, ProfileId = 3}
-            );
+            );*/
 
             // Profiles: FavoriteGames
             builder.Entity<FavoriteGame>().ToTable("FavoriteGames");
@@ -107,12 +107,12 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
             builder.Entity<FavoriteGame>().Property(fg => fg.GameName).IsRequired();
             builder.Entity<FavoriteGame>().Property(fg => fg.ProfileId).IsRequired();
 
-            builder.Entity<FavoriteGame>().HasData
+            /*builder.Entity<FavoriteGame>().HasData
             (
                 new FavoriteGame {Id = 1, GameName = "Among Us", ProfileId = 1},
                 new FavoriteGame {Id = 2, GameName = "Call of Duty", ProfileId = 2},
                 new FavoriteGame {Id = 3, GameName = "Free Fire", ProfileId = 3}
-            );
+            );*/
 
             //Publications
 
@@ -121,9 +121,11 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
             builder.Entity<Publication>().HasKey(p => p.Id);
             builder.Entity<Publication>().Property(p => p.Title).IsRequired();
             builder.Entity<Publication>().Property(p => p.Content).IsRequired();
-            builder.Entity<Publication>().Property(p => p.PublicatedAt).IsRequired();
+            builder.Entity<Publication>().Property(p => p.CreatedAt).IsRequired();
             builder.Entity<Publication>().Property(p => p.PublicationType).IsRequired();
+            builder.Entity<Publication>().Property(p => p.TournamentId).HasDefaultValue(null);
             builder.Entity<Publication>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Publication>().HasOne(p => p.Tournament).WithOne(t => t.Publication).HasForeignKey<Tournament>(t => t.Id);
             
             //Users
             builder.Entity<User>().ToTable("Users");
@@ -139,15 +141,14 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
             builder.Entity<Tournament>().ToTable("Tournaments");
             builder.Entity<Tournament>().HasKey(p => p.Id);
             builder.Entity<Tournament>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<Tournament>().Property(p => p.PublicationId).IsRequired();
             builder.Entity<Tournament>().HasMany(p => p.Participants).WithOne();
             
-            builder.Entity<Tournament>().HasData
+            /*builder.Entity<Tournament>().HasData
             (
                 new Tournament {Id = 1, PublicationId = 1},
                 new Tournament {Id = 2, PublicationId = 2},
                 new Tournament {Id = 3, PublicationId = 3}
-            );
+            );*/
             
             //Participants
             builder.Entity<Participant>().ToTable("Participants");
@@ -155,13 +156,13 @@ namespace GamingWorld.API.Shared.Persistence.Contexts
             builder.Entity<Participant>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Participant>().Property(p => p.TournamentId).IsRequired();
             builder.Entity<Participant>().Property(p => p.UserId).IsRequired();
-            
-            builder.Entity<Participant>().HasData
+
+            /*builder.Entity<Participant>().HasData
             (
                 new Participant {Id = 1, TournamentId = 1, Points = 12, UserId = 1},
                 new Participant {Id = 2, TournamentId = 1, Points = 24, UserId = 2},
-                new Participant {Id = 3, TournamentId = 2, Points = 2, UserId = 1}
-            );
+                new Participant {Id = 3, TournamentId = 2, Points = 2, UserId = 3}
+            );*/
 
             builder.UseSnakeCaseNamingConvention();
 

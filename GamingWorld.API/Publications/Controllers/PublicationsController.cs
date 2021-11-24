@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using GamingWorld.API.Business.Domain.Models;
+using GamingWorld.API.Business.Domain.Services;
+using GamingWorld.API.Business.Resources;
+using GamingWorld.API.Business.Services;
 using GamingWorld.API.Publications.Domain.Models;
 using GamingWorld.API.Publications.Domain.Services;
 using GamingWorld.API.Publications.Resources;
@@ -14,12 +18,14 @@ namespace GamingWorld.API.Publications.Controllers
     public class PublicationsController : ControllerBase
     {
         private readonly IPublicationService _publicationService;
+        private readonly ITournamentService _tournamentService;
         private readonly IMapper _mapper;
 
-        public PublicationsController(IPublicationService publicationService, IMapper mapper)
+        public PublicationsController(IPublicationService publicationService, IMapper mapper, ITournamentService tournamentService)
         {
             _publicationService = publicationService;
             _mapper = mapper;
+            _tournamentService = tournamentService;
         }
         
         [HttpGet]
@@ -40,6 +46,7 @@ namespace GamingWorld.API.Publications.Controllers
             }
             
         }
+        
         [HttpGet("{id}")]
         public async Task<PublicationResource> GetById(int id)
         {
@@ -54,12 +61,13 @@ namespace GamingWorld.API.Publications.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
-            var publication = _mapper.Map<SavePublicationResource, Publication>(resource);
-            var result = await _publicationService.SaveAsync(publication);
+            var publicationResult = await _publicationService.SaveAsync(resource);
 
-            if (!result.Success)
-                return BadRequest(result.Message);
-            var publicationResource = _mapper.Map<Publication, PublicationResource>(result.Resource);
+
+            if (!publicationResult.Success)
+                return BadRequest(publicationResult.Message);
+
+            var publicationResource = _mapper.Map<Publication, PublicationResource>(publicationResult.Resource);
             return Ok(publicationResource);
         }
 

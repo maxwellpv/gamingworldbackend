@@ -1,4 +1,6 @@
-﻿namespace GamingWorld.API.Business.Domain.Models
+﻿using GamingWorld.API.Security.Domain.Models;
+
+namespace GamingWorld.API.Business.Domain.Models
 {
     public class Participant
     {
@@ -8,6 +10,8 @@
         public int Points { get; set; }
 
         public int UserId { get; set; }
+        
+        public User User { get; set; }
         
         public int TournamentId { get; set; }
     }
