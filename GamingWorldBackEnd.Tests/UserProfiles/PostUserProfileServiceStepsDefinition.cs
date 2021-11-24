@@ -5,8 +5,8 @@ using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using GamingWorld.API;
+using GamingWorld.API.Profiles.Resources;
 using GamingWorld.API.Publications.Resources;
-using GamingWorld.API.UserProfiles.Resources;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using SpecFlow.Internal.Json;
@@ -38,7 +38,7 @@ namespace GamingWorldBackEnd.Tests
         [When(@"a POST Request is sent with this body")]
         public void WhenApostRequestIsSentWithThisBody(Table saveUserProfileResource)
         {
-            var resource = saveUserProfileResource.CreateSet<SaveUserProfileResource>().First();
+            var resource = saveUserProfileResource.CreateSet<SaveProfileResource>().First();
             var content = new StringContent(resource.ToJson(), Encoding.UTF8, MediaTypeNames.Application.Json);
             Response = _client.PostAsync(_baseUri, content);
         }
@@ -47,9 +47,9 @@ namespace GamingWorldBackEnd.Tests
         [Then(@"a UserProfile resource is included in the response body\.")]
         public async void ThenAUserProfileResourceIsIncludedInTheResponseBody(Table expectedUserProfileResource)
         {
-            var expectedResource = expectedUserProfileResource.CreateSet<UserProfileResource>().First();
+            var expectedResource = expectedUserProfileResource.CreateSet<ProfileResource>().First();
             var responseData = await Response.Result.Content.ReadAsStringAsync();
-            var resource = JsonConvert.DeserializeObject<UserProfileResource>(responseData);
+            var resource = JsonConvert.DeserializeObject<ProfileResource>(responseData);
             expectedResource.Id = resource.Id;
             var jsonExpectedResource = expectedResource.ToJson();
             var jsonActualResource = resource.ToJson();

@@ -6,7 +6,7 @@ using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using GamingWorld.API;
-using GamingWorld.API.Users.Resources;
+using GamingWorld.API.Security.Resources;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using SpecFlow.Internal.Json;
